@@ -8,6 +8,9 @@ public class CPU {
     int price, hyperThreading, coreCount, maxMemory, TDP;
     boolean overclockable;
 
+    //NEED TO ADD
+    String socket, architecture;
+
     //Method declarations
     public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, int hyperThreading) {
         this.name = name;
