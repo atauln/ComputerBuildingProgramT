@@ -6,12 +6,15 @@ import com.atom.cbp.terminal.libraries.Variables;
 import java.util.*;
 
 public class Main {
+
+    //Local variable declaration
     Variables var = new Variables();
     Scanner scan = new Scanner(System.in).useDelimiter("\\n");
     List<CPU> intelCPUList = new ArrayList<>();
     List<CPU> AMDCPUList = new ArrayList<>();
     CPU currentCPU;
 
+    //Main class
     public static void main(String[] args) {
         Variables var = new Variables();
         Main main = new Main();
@@ -23,6 +26,8 @@ public class Main {
             main.day(var.getDay());
         }
     }
+
+    //day function
     public void day(int day) {
         sysOut("It is now day " + day + ".");
         boolean dayEnd = false;
@@ -34,6 +39,7 @@ public class Main {
                 break;
             }
             try {
+                //checking command, and outputting result
                 if (command.get(0).equals("help")) {
                     sysOut("----------");
                     sysOut("Commands currently available: ");
@@ -116,6 +122,7 @@ public class Main {
         }
     }
 
+    //Mini-methods
     public List<CPU> getIntelCPUList() {
         return intelCPUList;
     }

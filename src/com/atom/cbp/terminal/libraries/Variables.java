@@ -29,6 +29,7 @@ public class Variables {
         amdCPUList.add(new CPU("Ryzen 5 2400G", 3.6, 4, "Q1' 2018", 175, 64, "DDR4-2933", 65, 8, 3.9, true));
         amdCPUList.add(new CPU("Ryzen 5 3600", 3.6, 6, "Q1' 2019", 250, 128, "DDR4-3200", 65, 12, 4.2, true));
         amdCPUList.add(new CPU("Ryzen 7 2700X", 3.7, 8, "Q1' 2018", 330, 64, "DDR4-2933", 105, 16, 4.3, true));
+        
     }
     public List<CPU> getAmdCPUList() {
         return amdCPUList;
