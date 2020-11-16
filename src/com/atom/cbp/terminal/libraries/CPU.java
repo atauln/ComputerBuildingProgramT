@@ -12,7 +12,7 @@ public class CPU {
     String socket, architecture;
 
     //Method declarations
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, int hyperThreading) {
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, String socket, String arch, int hyperThreading) {
         this.name = name;
         this.ghz = ghz;
         this.releaseDate = releaseDate;
@@ -22,8 +22,10 @@ public class CPU {
         this.memoryType = memoryType;
         this.TDP = TDP;
         this.coreCount = coreCount;
+        this.socket = socket;
+        this.architecture = arch;
     }
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, double turboBoostTo) {
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, String socket, String arch, double turboBoostTo) {
         this.name = name;
         this.ghz = ghz;
         this.releaseDate = releaseDate;
@@ -33,8 +35,10 @@ public class CPU {
         this.memoryType = memoryType;
         this.TDP = TDP;
         this.coreCount = coreCount;
+        this.socket = socket;
+        this.architecture = arch;
     }
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, boolean overclockable) {
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, String socket, String arch, boolean overclockable) {
         this.name = name;
         this.ghz = ghz;
         this.releaseDate = releaseDate;
@@ -44,32 +48,10 @@ public class CPU {
         this.memoryType = memoryType;
         this.TDP = TDP;
         this.coreCount = coreCount;
+        this.socket = socket;
+        this.architecture = arch;
     }
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, double turboBoostTo, int hyperThreading) {
-        this.name = name;
-        this.ghz = ghz;
-        this.releaseDate = releaseDate;
-        this.price = price;
-        this.turboBoostTo = turboBoostTo;
-        this.maxMemory = maxMemory;
-        this.memoryType = memoryType;
-        this.TDP = TDP;
-        this.hyperThreading = hyperThreading;
-        this.coreCount = coreCount;
-    }
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, double turboBoostTo, boolean overclockable) {
-        this.name = name;
-        this.ghz = ghz;
-        this.releaseDate = releaseDate;
-        this.price = price;
-        this.turboBoostTo = turboBoostTo;
-        this.maxMemory = maxMemory;
-        this.memoryType = memoryType;
-        this.TDP = TDP;
-        this.overclockable = overclockable;
-        this.coreCount = coreCount;
-    }
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, int hyperThreading, double turboBoostTo, boolean overclockable) {
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, String socket, String arch, double turboBoostTo, int hyperThreading) {
         this.name = name;
         this.ghz = ghz;
         this.releaseDate = releaseDate;
@@ -80,9 +62,39 @@ public class CPU {
         this.TDP = TDP;
         this.hyperThreading = hyperThreading;
         this.coreCount = coreCount;
-        this.overclockable = overclockable;
+        this.socket = socket;
+        this.architecture = arch;
     }
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP) {
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, String socket, String arch, double turboBoostTo, boolean overclockable) {
+        this.name = name;
+        this.ghz = ghz;
+        this.releaseDate = releaseDate;
+        this.price = price;
+        this.turboBoostTo = turboBoostTo;
+        this.maxMemory = maxMemory;
+        this.memoryType = memoryType;
+        this.TDP = TDP;
+        this.overclockable = overclockable;
+        this.coreCount = coreCount;
+        this.socket = socket;
+        this.architecture = arch;
+    }
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, String socket, String arch, int hyperThreading, double turboBoostTo, boolean overclockable) {
+        this.name = name;
+        this.ghz = ghz;
+        this.releaseDate = releaseDate;
+        this.price = price;
+        this.turboBoostTo = turboBoostTo;
+        this.maxMemory = maxMemory;
+        this.memoryType = memoryType;
+        this.TDP = TDP;
+        this.hyperThreading = hyperThreading;
+        this.coreCount = coreCount;
+        this.overclockable = overclockable;
+        this.socket = socket;
+        this.architecture = arch;
+    }
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, String socket, String arch) {
         this.name = name;
         this.ghz = ghz;
         this.releaseDate = releaseDate;
@@ -91,6 +103,8 @@ public class CPU {
         this.memoryType = memoryType;
         this.TDP = TDP;
         this.coreCount = coreCount;
+        this.socket = socket;
+        this.architecture = arch;
     }
 
     //Getter methods
