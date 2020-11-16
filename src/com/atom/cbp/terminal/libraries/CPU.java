@@ -5,11 +5,14 @@ public class CPU {
     //General variable introduction
     String name, releaseDate, memoryType;
     double ghz, turboBoostTo;
-    int price, hyperThreading, coreCount, maxMemory, TDP, memoryLanes;
+    int price, hyperThreading, coreCount, maxMemory, TDP;
     boolean overclockable;
 
+    //NEED TO ADD
+    String socket, architecture;
+
     //Method declarations
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, int memoryLanes, int hyperThreading) {
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, int hyperThreading) {
         this.name = name;
         this.ghz = ghz;
         this.releaseDate = releaseDate;
@@ -18,10 +21,9 @@ public class CPU {
         this.maxMemory = maxMemory;
         this.memoryType = memoryType;
         this.TDP = TDP;
-        this.memoryLanes = memoryLanes;
         this.coreCount = coreCount;
     }
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, int memoryLanes, double turboBoostTo) {
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, double turboBoostTo) {
         this.name = name;
         this.ghz = ghz;
         this.releaseDate = releaseDate;
@@ -30,10 +32,9 @@ public class CPU {
         this.maxMemory = maxMemory;
         this.memoryType = memoryType;
         this.TDP = TDP;
-        this.memoryLanes = memoryLanes;
         this.coreCount = coreCount;
     }
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, int memoryLanes, boolean overclockable) {
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, boolean overclockable) {
         this.name = name;
         this.ghz = ghz;
         this.releaseDate = releaseDate;
@@ -42,10 +43,9 @@ public class CPU {
         this.maxMemory = maxMemory;
         this.memoryType = memoryType;
         this.TDP = TDP;
-        this.memoryLanes = memoryLanes;
         this.coreCount = coreCount;
     }
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, int memoryLanes, double turboBoostTo, int hyperThreading) {
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, double turboBoostTo, int hyperThreading) {
         this.name = name;
         this.ghz = ghz;
         this.releaseDate = releaseDate;
@@ -54,11 +54,10 @@ public class CPU {
         this.maxMemory = maxMemory;
         this.memoryType = memoryType;
         this.TDP = TDP;
-        this.memoryLanes = memoryLanes;
         this.hyperThreading = hyperThreading;
         this.coreCount = coreCount;
     }
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, int memoryLanes, double turboBoostTo, boolean overclockable) {
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, double turboBoostTo, boolean overclockable) {
         this.name = name;
         this.ghz = ghz;
         this.releaseDate = releaseDate;
@@ -67,11 +66,10 @@ public class CPU {
         this.maxMemory = maxMemory;
         this.memoryType = memoryType;
         this.TDP = TDP;
-        this.memoryLanes = memoryLanes;
         this.overclockable = overclockable;
         this.coreCount = coreCount;
     }
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, int memoryLanes, double turboBoostTo, int hyperThreading, boolean overclockable) {
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, int hyperThreading, double turboBoostTo, boolean overclockable) {
         this.name = name;
         this.ghz = ghz;
         this.releaseDate = releaseDate;
@@ -80,12 +78,11 @@ public class CPU {
         this.maxMemory = maxMemory;
         this.memoryType = memoryType;
         this.TDP = TDP;
-        this.memoryLanes = memoryLanes;
         this.hyperThreading = hyperThreading;
         this.coreCount = coreCount;
         this.overclockable = overclockable;
     }
-    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP, int memoryLanes) {
+    public CPU(String name, double ghz, int coreCount, String releaseDate, int price, int maxMemory, String memoryType, int TDP) {
         this.name = name;
         this.ghz = ghz;
         this.releaseDate = releaseDate;
@@ -93,7 +90,6 @@ public class CPU {
         this.maxMemory = maxMemory;
         this.memoryType = memoryType;
         this.TDP = TDP;
-        this.memoryLanes = memoryLanes;
         this.coreCount = coreCount;
     }
 
@@ -124,9 +120,6 @@ public class CPU {
     }
     public String getMemoryType() {
         return memoryType;
-    }
-    public int getMemoryLanes() {
-        return memoryLanes;
     }
     public int getTDP() {
         return TDP;
