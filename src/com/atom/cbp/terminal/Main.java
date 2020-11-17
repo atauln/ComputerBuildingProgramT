@@ -38,11 +38,6 @@ public class Main {
                 dayEnd = true;
                 break;
             }
-            try {
-                if (command.get(0).equals("")) {}
-            } catch (Exception e) {
-                sysOut("ERROR: Your first arg was invalid!");
-            }
                 //checking command, and outputting result
             if (command.get(0).equals("help")) {
                 sysOut("----------");
@@ -147,6 +142,26 @@ public class Main {
                 }
             }
         }
+    }
+
+    public List<CPU> pcBuild() {
+        List<CPU> pcPartsList = new ArrayList<>();
+        while (true) {
+            sysOut("**********\nSelect your CPU:");
+            for (CPU cpu : var.getCPUList()) {
+                sysOut(var.getCPUList().indexOf(cpu) + 1 + ". " + cpu.getName() + " ($" + cpu.getPrice() + ")");
+            }
+            sysOut("**********");
+            try {
+                pcPartsList.add(var.getCPUList().get(Integer.parseInt(scan.next())));
+                break;
+            } catch (Exception e) {
+                if (e instanceof IndexOutOfBoundsException) {
+                    sysOut("Please type an integer as selection!");
+                }
+            }
+        }
+        return pcPartsList;
     }
 
     //Mini-methods
