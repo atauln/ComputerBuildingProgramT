@@ -138,4 +138,13 @@ public class CPU {
     public int getTDP() {
         return TDP;
     }
+    public boolean isOverclockable() {
+        return overclockable;
+    }
+    public String getSocket() {
+        return socket;
+    }
+    public String getArchitecture() {
+        return architecture;
+    }
 }
