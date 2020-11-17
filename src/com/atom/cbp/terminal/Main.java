@@ -125,12 +125,18 @@ public class Main {
                             }
                         }
                     } else if (command.get(1).equals("motherboard")) {
-                        Motherboard motherboard = motherboardList.get(Integer.parseInt(command.get(2)) - 1);
-                        sysOut("----------" + "\nMotherboard details: " + "\nName: " + motherboard.getName() + "\nSocket: " + motherboard.getSocket() + "\nSize: " + motherboard.getSize() + "\nUSB Ports: " + motherboard.getUsb2Ports() + " USB-2 ports, " + motherboard.getUsb3Ports() + " USB-3 ports, " + motherboard.getUsbCPorts() + " USB-C ports" + "\nOutputs: " + motherboard.getNumOutputs() + "\nPCIe Slots: " + motherboard.getPcieSlots() + "\nRAM Slots: " + motherboard.getRamSlots() + " (with " + motherboard.getMaxMemory() + " gb of maximum memory)" + "\nNVME Slots: " + motherboard.getNvmeSlots() + "\nSATA Ports: " + motherboard.getSataSlots() + "\nIntegrated WiFi: " + motherboard.isIntWiFi() + "\nIntegrated Bluetooth: " + motherboard.isIntBT() + "\nPrice: $" + motherboard.getPrice() + "\n----------");
+                        try {
+                            Motherboard motherboard = motherboardList.get(Integer.parseInt(command.get(2)) - 1);
+                            sysOut("----------" + "\nMotherboard details: " + "\nName: " + motherboard.getName() + "\nSocket: " + motherboard.getSocket() + "\nSize: " + motherboard.getSize() + "\nUSB Ports: " + motherboard.getUsb2Ports() + " USB-2 ports, " + motherboard.getUsb3Ports() + " USB-3 ports, " + motherboard.getUsbCPorts() + " USB-C ports" + "\nOutputs: " + motherboard.getNumOutputs() + "\nPCIe Slots: " + motherboard.getPcieSlots() + "\nRAM Slots: " + motherboard.getRamSlots() + " (with " + motherboard.getMaxMemory() + " gb of maximum memory)" + "\nNVME Slots: " + motherboard.getNvmeSlots() + "\nSATA Ports: " + motherboard.getSataSlots() + "\nIntegrated WiFi: " + motherboard.isIntWiFi() + "\nIntegrated Bluetooth: " + motherboard.isIntBT() + "\nPrice: $" + motherboard.getPrice() + "\n----------");
+                        } catch (Exception e) {
+                            if (e instanceof IndexOutOfBoundsException) {
+                                sysOut("Please use a number for the details of the item.");
+                            }
+                        }
                     } else {sysOut("Second arg was invalid!");}
                 } catch (Exception e) {
                     if (e instanceof IndexOutOfBoundsException) {
-                        sysOut("----------\nTypes:\ncpu\n----------");
+                        sysOut("----------\nTypes:\ncpu\nmotherboard\n----------");
                     }
                 }
             } else if (command.get(0).equals("startbuild")) {
