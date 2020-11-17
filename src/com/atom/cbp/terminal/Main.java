@@ -1,10 +1,7 @@
 package com.atom.cbp.terminal;
 
-import com.atom.cbp.terminal.libraries.CPU;
-import com.atom.cbp.terminal.libraries.Motherboard;
-import com.atom.cbp.terminal.libraries.Variables;
+import com.atom.cbp.terminal.libraries.*;
 
-import java.rmi.MarshalledObject;
 import java.util.*;
 
 public class Main {
@@ -36,12 +33,9 @@ public class Main {
     //day function
     public void day(int day) {
         sysOut("It is now day " + day + ".");
-        boolean dayEnd = false;
-        while (!dayEnd) {
-            dayEnd = false;
+        while (true) {
             List<String> command = listenforCommand();
             if (command.get(0).equals("end")) {
-                dayEnd = true;
                 break;
             }
                 //checking command, and outputting result
@@ -160,7 +154,7 @@ public class Main {
         while (pcPartsList.size() != 1) {
             sysOut("**********\nSelect your CPU:");
             for (CPU cpu : cpuList) {
-                sysOut((cpuList.indexOf((Object) cpu) + 1) + ". " + cpu.getName() + " ($" + cpu.getPrice() + ")");
+                sysOut((cpuList.indexOf(cpu) + 1) + ". " + cpu.getName() + " ($" + cpu.getPrice() + ")");
             }
             sysOut("**********");
             String userCommand = scan.next();
@@ -203,14 +197,8 @@ public class Main {
     }
 
     //Mini-methods
-    public List<CPU> getIntelCPUList() {
-        return intelCPUList;
-    }
     public void setIntelCPUList(List<CPU> intelCPUList) {
         this.intelCPUList = intelCPUList;
-    }
-    public List<CPU> getAMDCPUList() {
-        return AMDCPUList;
     }
     public void setAMDCPUList(List<CPU> AMDCPUList) {
         this.AMDCPUList = AMDCPUList;
