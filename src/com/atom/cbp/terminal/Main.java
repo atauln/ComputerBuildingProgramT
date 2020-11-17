@@ -47,50 +47,41 @@ public class Main {
                 sysOut("shop [type] [brand] - look at the current catalog of items");
                 sysOut("details [type] [brand] [#] - get details for an item");
                 sysOut("----------");
-            }
-            if (command.get(0).equals("shop")) {
+            } else if (command.get(0).equals("bal") || command.get(0).equals("balance")) {
+                sysOut("----------\nBalance: " + var.getBal() + "\n----------");
+            } else if (command.get(0).equals("shop")) {
                 try {
                     if (command.get(1).equals("cpu")) {
-                        sysOut("----------");
-                        sysOut("Current balance: " + var.getBal());
+                        sysOut("----------\nCPUs:");
                         try {
                             if (command.get(2).equals("intel")) {
-                                sysOut("1. Intel Core 2 Duo E8400");
-                                sysOut("2. Intel Core i3-2370M");
-                                sysOut("3. Intel Core i3-8145U");
-                                sysOut("4. Intel Core i3-10100");
-                                sysOut("5. Intel Core i5-2400");
-                                sysOut("6. Intel Core i5-8500");
-                                sysOut("7. Intel Core i7-6700");
-                                sysOut("8. Intel Core i7-8700");
-                                sysOut("9. Intel Core i9-9900K");
+                                for (CPU cpu : intelCPUList) {
+                                    sysOut(intelCPUList.indexOf(cpu) + 1 + ". " + cpu.getName() +" ($" + cpu.getPrice() + ")");
+                                }
                             } else if (command.get(2).equals("amd")) {
-                                sysOut("1. AMD Athlon 3000G");
-                                sysOut("2. AMD Ryzen 3 1200");
-                                sysOut("3. AMD Ryzen 3 3200G");
-                                sysOut("4. AMD Ryzen 5 1600");
-                                sysOut("5. AMD Ryzen 5 2400G");
-                                sysOut("6. AMD Ryzen 5 3600");
-                                sysOut("7. AMD Ryzen 7 2700X");
-                                sysOut("8. AMD Ryzen 7 3800X");
-                                sysOut("9. AMD Ryzen 9 3900X");
-                                sysOut("10. AMD Ryzen Threadripper 2950X");
-                                sysOut("11. AMD Ryzen Threadripper 3970X");
-                            }
+                                for (CPU cpu : AMDCPUList) {
+                                    sysOut(AMDCPUList.indexOf(cpu) + 1 + ". " + cpu.getName() +" ($" + cpu.getPrice() + ")");
+                                }
+                            } else {sysOut("Third arg was invalid!");}
                         } catch (Exception e) {
                             if (e instanceof IndexOutOfBoundsException) {
                                 sysOut("-----------\nBrands:\nintel\namd\n----------");
                             }
                         }
                         sysOut("----------");
-                    }
+                    } else if (command.get(1).equals("motherboard")) {
+                        sysOut("----------\nMotherboards:");
+                        for (Motherboard motherboard : motherboardList) {
+                            sysOut(motherboardList.indexOf(motherboard) + 1 + ". " + motherboard.getName() +" ($" + motherboard.getPrice() + ")");
+                        }
+                        sysOut("----------");
+                    } else {sysOut("Second arg was invalid!");}
                 } catch (Exception e) {
                     if (e instanceof IndexOutOfBoundsException) {
                         sysOut("----------\nTypes:\ncpu\n----------");
                     }
                 }
-            }
-            if (command.get(0).equals("details")) {
+            } else if (command.get(0).equals("details")) {
                 try {
                     if (command.get(1).equals("cpu")) {
                         try {
@@ -102,8 +93,7 @@ public class Main {
                                         sysOut("Please use a number for the details of an item!");
                                     }
                                 }
-                            }
-                            else if (command.get(2).equals("amd")) {
+                            }  else if (command.get(2).equals("amd")) {
                                 try {
                                     currentCPU = AMDCPUList.get(Integer.parseInt(command.get(3)) - 1);
                                 } catch (Exception e) {
@@ -128,22 +118,24 @@ public class Main {
                                 sysOut("Release Date: " + currentCPU.getReleaseDate());
                                 sysOut("Price: $" + currentCPU.getPrice());
                                 sysOut("----------");
-                            }
+                            } else {sysOut("Third arg was invalid!");}
                         } catch (Exception e) {
                             if (e instanceof IndexOutOfBoundsException) {
                                 sysOut("----------\nBrands:\nintel\namd\n----------");
                             }
                         }
-                    }
+                    } else if (command.get(1).equals("motherboard")) {
+                        Motherboard motherboard = motherboardList.get(Integer.parseInt(command.get(2)) - 1);
+                        sysOut("----------" + "\nMotherboard details: " + "\nName: " + motherboard.getName() + "\nSocket: " + motherboard.getSocket() + "\nSize: " + motherboard.getSize() + "\nUSB Ports: " + motherboard.getUsb2Ports() + " USB-2 ports, " + motherboard.getUsb3Ports() + " USB-3 ports, " + motherboard.getUsbCPorts() + " USB-C ports" + "\nOutputs: " + motherboard.getNumOutputs() + "\nPCIe Slots: " + motherboard.getPcieSlots() + "\nRAM Slots: " + motherboard.getRamSlots() + " (with " + motherboard.getMaxMemory() + " gb of maximum memory)" + "\nNVME Slots: " + motherboard.getNvmeSlots() + "\nSATA Ports: " + motherboard.getSataSlots() + "\nIntegrated WiFi: " + motherboard.isIntWiFi() + "\nIntegrated Bluetooth: " + motherboard.isIntBT() + "\nPrice: $" + motherboard.getPrice() + "\n----------");
+                    } else {sysOut("Second arg was invalid!");}
                 } catch (Exception e) {
                     if (e instanceof IndexOutOfBoundsException) {
                         sysOut("----------\nTypes:\ncpu\n----------");
                     }
                 }
-            }
-            if (command.get(0).equals("startbuild")) {
+            } else if (command.get(0).equals("startbuild")) {
                 List<Object> obj = pcBuild();
-            }
+            } else {sysOut("First arg was invalid!");}
         }
     }
 
