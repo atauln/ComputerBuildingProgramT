@@ -45,7 +45,6 @@ public class Variables {
         motherboardList.add(new Motherboard("ASUS Prime Z390-A","LGA1151", "ATX", 2, 5, 1, 2, 4, 64, 6, 3, 2, false, false, 180));
         motherboardList.add(new Motherboard("ASRock B450M PRO4", "AM4", "Micro ATX", 2, 5, 1, 2, 4, 64, 4, 2, 2, false, false, 83));
         motherboardList.add(new Motherboard("MSI MAG B550M BAZOOKA", "AM4", "Micro ATX", 2, 4, 0, 2, 4, 128, 4, 1, 2, false, false, 130));
-
     }
     public List<CPU> getAmdCPUList() {
         return amdCPUList;
@@ -67,5 +66,8 @@ public class Variables {
     }
     public List<CPU> getCPUList() {
         return CPUList;
+    }
+    public List<Motherboard> getMotherboardList() {
+        return motherboardList;
     }
 }

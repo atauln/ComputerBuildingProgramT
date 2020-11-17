@@ -1,8 +1,10 @@
 package com.atom.cbp.terminal;
 
 import com.atom.cbp.terminal.libraries.CPU;
+import com.atom.cbp.terminal.libraries.Motherboard;
 import com.atom.cbp.terminal.libraries.Variables;
 
+import java.rmi.MarshalledObject;
 import java.util.*;
 
 public class Main {
@@ -12,6 +14,8 @@ public class Main {
     Scanner scan = new Scanner(System.in).useDelimiter("\\n");
     List<CPU> intelCPUList = new ArrayList<>();
     List<CPU> AMDCPUList = new ArrayList<>();
+    List<CPU> cpuList = new ArrayList<>();
+    List<Motherboard> motherboardList = new ArrayList<>();
     CPU currentCPU;
 
     //Main class
@@ -21,6 +25,8 @@ public class Main {
         var.initLists();
         main.setIntelCPUList(var.getIntelCPUList());
         main.setAMDCPUList(var.getAmdCPUList());
+        main.setCpuList(var.getCPUList());
+        main.setMotherboardList(var.getMotherboardList());
         while (true) {
             var.setDay(var.getDay() + 1);
             main.day(var.getDay());
@@ -141,23 +147,55 @@ public class Main {
                     }
                 }
             }
+            if (command.get(0).equals("startbuild")) {
+                List<Object> obj = pcBuild();
+            }
         }
     }
 
-    public List<CPU> pcBuild() {
-        List<CPU> pcPartsList = new ArrayList<>();
-        while (true) {
+    public List<Object> pcBuild() {
+        List<Object> emptyList = new ArrayList<>();
+        List<Object> pcPartsList = new ArrayList<>();
+
+        while (pcPartsList.size() != 1) {
             sysOut("**********\nSelect your CPU:");
-            for (CPU cpu : var.getCPUList()) {
-                sysOut(var.getCPUList().indexOf(cpu) + 1 + ". " + cpu.getName() + " ($" + cpu.getPrice() + ")");
+            for (CPU cpu : cpuList) {
+                sysOut((cpuList.indexOf((Object) cpu) + 1) + ". " + cpu.getName() + " ($" + cpu.getPrice() + ")");
             }
             sysOut("**********");
+            String userCommand = scan.next();
+            if (userCommand.equals("stop") || userCommand.equals("end")) {
+                return emptyList;
+            }
             try {
-                pcPartsList.add(var.getCPUList().get(Integer.parseInt(scan.next())));
-                break;
+                pcPartsList.add(cpuList.get(Integer.parseInt(userCommand) - 1));
             } catch (Exception e) {
                 if (e instanceof IndexOutOfBoundsException) {
-                    sysOut("Please type an integer as selection!");
+                    sysOut("Please type a valid integer!");
+                }
+            }
+        }
+        List<Object> motherboardListA = new ArrayList<>();
+        for (Motherboard m : motherboardList) {
+            if (m.getSocket().equals( ( (CPU) pcPartsList.get(0) ).getSocket() ) ) {
+                motherboardListA.add(m);
+            }
+        }
+        while (pcPartsList.size() != 2) {
+            sysOut("**********\nSelect your motherboard:");
+            for (Object m : motherboardListA) {
+                sysOut(motherboardListA.indexOf(m) + 1 + ". " + ((Motherboard) m).getName() + " ($" + ((Motherboard) m).getPrice() + ")");
+            }
+            sysOut("**********");
+            String userCommand = scan.next();
+            if (userCommand.equals("stop") || userCommand.equals("end")) {
+                return emptyList;
+            }
+            try {
+                pcPartsList.add(motherboardListA.get(Integer.parseInt(userCommand) - 1));
+            } catch (Exception e) {
+                if (e instanceof IndexOutOfBoundsException) {
+                    sysOut("Please type a valid integer!");
                 }
             }
         }
@@ -182,5 +220,11 @@ public class Main {
     }
     public void sysOut(String string) {
         System.out.println(string);
+    }
+    public void setMotherboardList(List<Motherboard> motherboardList) {
+        this.motherboardList = motherboardList;
+    }
+    public void setCpuList(List<CPU> cpuList) {
+        this.cpuList = cpuList;
     }
 }

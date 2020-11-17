@@ -60,4 +60,16 @@ public class Motherboard {
     public int getUsbCPorts() {
         return usbCPorts;
     }
+    public String getName() {
+        return name;
+    }
+    public int getSataSlots() {
+        return sataSlots;
+    }
+    public int getMaxMemory() {
+        return maxMemory;
+    }
+    public int getPrice() {
+        return price;
+    }
 }
