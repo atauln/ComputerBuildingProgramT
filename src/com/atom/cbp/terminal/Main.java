@@ -281,7 +281,7 @@ public class Main {
             }
         }
         while (pcPartsList.size() != 4) {
-            GPU chosenGPU;
+            GPU chosenGPU = null;
             sysOut("**********\nSelect your GPU: ");
             for (GPU gpu : gpuList) {
                 sysOut(gpuList.indexOf(gpu) + 1 + ". " + gpu.getName() + " ($" + gpu.getPrice() + ")");
@@ -293,6 +293,21 @@ public class Main {
             }
             try {
                 chosenGPU = gpuList.get(Integer.parseInt(userCommand) - 1);
+            } catch (Exception e) {
+                if (e instanceof IndexOutOfBoundsException) {
+                    sysOut("Please type a valid integer!");
+                }
+            }
+            sysOut("**********\nHow many GPUs would you like?: (max: " + ((Motherboard) pcPartsList.get(1)).getPcieSlots() + ")");
+            userCommand = scan.next();
+            try {
+                if (0 < Integer.parseInt(userCommand) && Integer.parseInt(userCommand) <= ((Motherboard) pcPartsList.get(1)).getPcieSlots()) {
+                    GPU[] gpus = new GPU[Integer.parseInt(userCommand)];
+                    for (int i=1; i <= Integer.parseInt(userCommand); i++) {
+                        gpus[i-1] = chosenGPU;
+                    }
+                    pcPartsList.add(gpus);
+                }
             } catch (Exception e) {
                 if (e instanceof IndexOutOfBoundsException) {
                     sysOut("Please type a valid integer!");
