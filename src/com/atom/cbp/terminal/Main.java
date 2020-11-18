@@ -314,6 +314,7 @@ public class Main {
                 }
             }
         }
+        sysOut("**********\nPC Details: " + "\nCPU: " + ((CPU) pcPartsList.get(0)).getName() + "\nMotherboard: " + ((Motherboard) pcPartsList.get(1)).getName() + "\nRAM: " + ((RAM[]) pcPartsList.get(2)).length + "x" + (((RAM[]) pcPartsList.get(2))[0]).getCapacity() + "GB " + (((RAM[]) pcPartsList.get(2))[0]).getType() + "-" + (((RAM[]) pcPartsList.get(2))[0]).getSpeed() + "\nGPU(s): " + ((GPU[]) pcPartsList.get(3))[0].getName() + " (" + ((GPU[]) pcPartsList.get(3)).length + ")\n**********");
         return pcPartsList;
     }
 

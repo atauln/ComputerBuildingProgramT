@@ -4,10 +4,10 @@ public class GPU {
 
     //General variables
     String name, releaseDate, memoryType;
-    int memorySize, cores, price, baseClock, boostClock;
+    int memorySize, cores, price, baseClock, boostClock, tdp;
 
     //Main constructor method
-    public GPU(String name, String releaseDate, String memoryType, int memorySize, int cores, int baseClock, int boostClock, int price) {
+    public GPU(String name, String releaseDate, String memoryType, int memorySize, int cores, int baseClock, int boostClock, int price, int tdp) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.memoryType = memoryType;
@@ -16,6 +16,7 @@ public class GPU {
         this.boostClock = boostClock;
         this.cores = cores;
         this.price = price;
+        this.tdp = tdp;
     }
 
     //Getter methods

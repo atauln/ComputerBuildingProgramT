@@ -48,7 +48,7 @@ public class Variables {
         motherboardList.add(new Motherboard("MSI MAG B550M BAZOOKA", "AM4", "Micro ATX", 2, 4, 0, 2, 4, 128, 4, 1, 2, false, false, 130));
 
         //GPUs
-        gpuList.add(new GPU("NVIDIA Geforce RTX 3080", "Q3' 2020", "GDDR6X", 10, 8704, 1440, 1710, 600));
+        gpuList.add(new GPU("NVIDIA Geforce RTX 3080", "Q3' 2020", "GDDR6X", 10, 8704, 1440, 1710, 600, 320));
     }
     public List<CPU> getAmdCPUList() {
         return amdCPUList;

@@ -12,4 +12,29 @@ public class Computer {
         this.cpu = cpu;
         this.gpus = gpus;
     }
+
+    public RAM[] getRams() {
+        return rams;
+    }
+    public void setRams(RAM[] rams) {
+        this.rams = rams;
+    }
+    public CPU getCpu() {
+        return cpu;
+    }
+    public void setCpu(CPU cpu) {
+        this.cpu = cpu;
+    }
+    public Motherboard getMobo() {
+        return mobo;
+    }
+    public void setMobo(Motherboard mobo) {
+        this.mobo = mobo;
+    }
+    public GPU[] getGpus() {
+        return gpus;
+    }
+    public void setGpus(GPU[] gpus) {
+        this.gpus = gpus;
+    }
 }
