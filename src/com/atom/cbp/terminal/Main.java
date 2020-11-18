@@ -38,7 +38,7 @@ public class Main {
             if (command.get(0).equals("end")) {
                 break;
             }
-                //checking command, and outputting result
+            //checking command, and outputting result
             if (command.get(0).equals("help")) {
                 sysOut("----------");
                 sysOut("Commands currently available: ");
@@ -56,13 +56,15 @@ public class Main {
                         try {
                             if (command.get(2).equals("intel")) {
                                 for (CPU cpu : intelCPUList) {
-                                    sysOut(intelCPUList.indexOf(cpu) + 1 + ". " + cpu.getName() +" ($" + cpu.getPrice() + ")");
+                                    sysOut(intelCPUList.indexOf(cpu) + 1 + ". " + cpu.getName() + " ($" + cpu.getPrice() + ")");
                                 }
                             } else if (command.get(2).equals("amd")) {
                                 for (CPU cpu : AMDCPUList) {
-                                    sysOut(AMDCPUList.indexOf(cpu) + 1 + ". " + cpu.getName() +" ($" + cpu.getPrice() + ")");
+                                    sysOut(AMDCPUList.indexOf(cpu) + 1 + ". " + cpu.getName() + " ($" + cpu.getPrice() + ")");
                                 }
-                            } else {sysOut("Third arg was invalid!");}
+                            } else {
+                                sysOut("Third arg was invalid!");
+                            }
                         } catch (Exception e) {
                             if (e instanceof IndexOutOfBoundsException) {
                                 sysOut("-----------\nBrands:\nintel\namd\n----------");
@@ -72,10 +74,12 @@ public class Main {
                     } else if (command.get(1).equals("motherboard")) {
                         sysOut("----------\nMotherboards:");
                         for (Motherboard motherboard : motherboardList) {
-                            sysOut(motherboardList.indexOf(motherboard) + 1 + ". " + motherboard.getName() +" ($" + motherboard.getPrice() + ")");
+                            sysOut(motherboardList.indexOf(motherboard) + 1 + ". " + motherboard.getName() + " ($" + motherboard.getPrice() + ")");
                         }
                         sysOut("----------");
-                    } else {sysOut("Second arg was invalid!");}
+                    } else {
+                        sysOut("Second arg was invalid!");
+                    }
                 } catch (Exception e) {
                     if (e instanceof IndexOutOfBoundsException) {
                         sysOut("----------\nTypes:\ncpu\n----------");
@@ -89,11 +93,11 @@ public class Main {
                                 try {
                                     CPU currentCPU = intelCPUList.get(Integer.parseInt(command.get(3)) - 1);
                                 } catch (Exception e) {
-                                    if (e instanceof  IndexOutOfBoundsException) {
+                                    if (e instanceof IndexOutOfBoundsException) {
                                         sysOut("Please use a number for the details of an item!");
                                     }
                                 }
-                            }  else if (command.get(2).equals("amd")) {
+                            } else if (command.get(2).equals("amd")) {
                                 try {
                                     currentCPU = AMDCPUList.get(Integer.parseInt(command.get(3)) - 1);
                                 } catch (Exception e) {
@@ -107,18 +111,26 @@ public class Main {
                                 sysOut("Socket: " + currentCPU.getSocket());
                                 sysOut("Architecture/Family: " + currentCPU.getArchitecture());
                                 sysOut("Core Count: " + currentCPU.getCoreCount());
-                                if (currentCPU.getHyperThreading() > currentCPU.getCoreCount()) {sysOut("Hyperthreading: true (" + currentCPU.getHyperThreading() + " cores)");}
-                                else {sysOut("Hyperthreading: false");}
+                                if (currentCPU.getHyperThreading() > currentCPU.getCoreCount()) {
+                                    sysOut("Hyperthreading: true (" + currentCPU.getHyperThreading() + " cores)");
+                                } else {
+                                    sysOut("Hyperthreading: false");
+                                }
                                 sysOut("Processing Speed: " + currentCPU.getGhz() + " GHz");
-                                if (currentCPU.getTurboBoostTo() > currentCPU.getGhz()) {sysOut("Turbo Boost: true (boosts up to " + currentCPU.getTurboBoostTo() + " GHz)");}
-                                else {sysOut("Turbo Boost: false");}
+                                if (currentCPU.getTurboBoostTo() > currentCPU.getGhz()) {
+                                    sysOut("Turbo Boost: true (boosts up to " + currentCPU.getTurboBoostTo() + " GHz)");
+                                } else {
+                                    sysOut("Turbo Boost: false");
+                                }
                                 sysOut("Overclockable: " + currentCPU.isOverclockable());
                                 sysOut("Memory: Max of " + currentCPU.getMaxMemory() + " GB\nMemory Type: " + currentCPU.getMemoryType());
                                 sysOut("TDP: " + currentCPU.getTDP() + "W");
                                 sysOut("Release Date: " + currentCPU.getReleaseDate());
                                 sysOut("Price: $" + currentCPU.getPrice());
                                 sysOut("----------");
-                            } else {sysOut("Third arg was invalid!");}
+                            } else {
+                                sysOut("Third arg was invalid!");
+                            }
                         } catch (Exception e) {
                             if (e instanceof IndexOutOfBoundsException) {
                                 sysOut("----------\nBrands:\nintel\namd\n----------");
@@ -133,7 +145,9 @@ public class Main {
                                 sysOut("Please use a number for the details of the item.");
                             }
                         }
-                    } else {sysOut("Second arg was invalid!");}
+                    } else {
+                        sysOut("Second arg was invalid!");
+                    }
                 } catch (Exception e) {
                     if (e instanceof IndexOutOfBoundsException) {
                         sysOut("----------\nTypes:\ncpu\nmotherboard\n----------");
@@ -141,7 +155,9 @@ public class Main {
                 }
             } else if (command.get(0).equals("startbuild")) {
                 List<Object> obj = pcBuild();
-            } else {sysOut("First arg was invalid!");}
+            } else {
+                sysOut("First arg was invalid!");
+            }
         }
     }
 
@@ -169,7 +185,7 @@ public class Main {
         }
         List<Object> motherboardListA = new ArrayList<>();
         for (Motherboard m : motherboardList) {
-            if (m.getSocket().equals( ( (CPU) pcPartsList.get(0) ).getSocket() ) ) {
+            if (m.getSocket().equals(((CPU) pcPartsList.get(0)).getSocket())) {
                 motherboardListA.add(m);
             }
         }
@@ -191,6 +207,62 @@ public class Main {
                 }
             }
         }
+        String[] ramSpeeds = {"DDR3-800", "DDR3-1066", "DDR3-1333", "DDR3-1600", "DDR4-2400", "DDR4-2666", "DDR4-2933", "DDR4-3000", "DDR4-3200", "DDR4-3600", "DDR4-4000", "DDR4-4400"};
+        List<String> chosenSpeeds = new ArrayList<>();
+        String ramSpeedChoice = "";
+        for (String s : ramSpeeds) {
+            int speed = 0;
+            if (s.length() == 9) {
+                speed = Integer.parseInt(s.substring(s.length() - 4));
+            } else if (s.length() == 8) {
+                speed = Integer.parseInt(s.substring(s.length() - 3));
+            }
+            if (speed <= Integer.parseInt(((CPU) pcPartsList.get(0)).getMemoryType().substring(((CPU) pcPartsList.get(0)).getMemoryType().length() - 4))) {
+                chosenSpeeds.add(s);
+            }
+        }
+        List<String> ramConfig = new ArrayList<>();
+        for (int ramModules = 1; ramModules <= ((Motherboard) pcPartsList.get(1)).getRamSlots(); ramModules = ramModules * 2) {
+            for (int ramCapacity = 1; ramCapacity <= ((Motherboard) pcPartsList.get(1)).getMaxMemory() && ramCapacity <= ((CPU) pcPartsList.get(0)).getMaxMemory(); ramCapacity = ramCapacity * 2) {
+                ramConfig.add(ramModules + "x" + ramCapacity);
+            }
+        }
+        while (pcPartsList.size() != 3) {
+            sysOut("**********\nSelect your RAM speed:");
+            for (String s : chosenSpeeds) {
+                sysOut(chosenSpeeds.indexOf(s) + 1 + ". " + s + " ($" + calculateRAMPrices(s) + " per gb)");
+            }
+            sysOut("**********");
+            String userCommand = scan.next();
+            if (userCommand.equals("end") || userCommand.equals("stop")) {
+                return emptyList;
+            }
+            try {
+                ramSpeedChoice = chosenSpeeds.get(Integer.parseInt(userCommand) - 1);
+            } catch (Exception e) {
+                sysOut("Please type a valid integer!");
+            }
+            sysOut("**********\nSelect your RAM configuration: ");
+            for (String s : ramConfig) {
+                sysOut(ramConfig.indexOf(s) + 1 + ". " + s + "gb" + " ($" + Math.round(calculateRAMPrices(ramSpeedChoice) * Character.getNumericValue(s.toCharArray()[0]) * Integer.parseInt(s.substring(s.length() - (s.length() - 2)))) + ")");
+            }
+            sysOut("**********");
+            userCommand = scan.next();
+            if (userCommand.equals("stop") || userCommand.equals("end")) {
+                return emptyList;
+            }
+            try {
+                RAM[] rams = new RAM[ramConfig.get(Integer.parseInt(userCommand)).toCharArray()[0]];
+                for (int i = 1; i <= (ramConfig.get(Integer.parseInt(userCommand)).toCharArray()[0]); i++) {
+                    rams[i - 1] = new RAM(ramSpeedChoice.substring(0, 4), Integer.parseInt(ramSpeedChoice.substring(ramSpeedChoice.length() - (ramSpeedChoice.length() - 5))), Integer.parseInt(ramConfig.get(Integer.parseInt(userCommand)).substring(ramConfig.get(Integer.parseInt(userCommand)).length() - (ramConfig.get(Integer.parseInt(userCommand)).length() - 2))));
+                }
+                pcPartsList.add(rams);
+            } catch (Exception e) {
+                if (e instanceof IndexOutOfBoundsException) {
+                    sysOut("Please type a valid integer!");
+                }
+            }
+        }
         return pcPartsList;
     }
 
@@ -198,19 +270,36 @@ public class Main {
     public void setIntelCPUList(List<CPU> intelCPUList) {
         this.intelCPUList = intelCPUList;
     }
+
     public void setAMDCPUList(List<CPU> AMDCPUList) {
         this.AMDCPUList = AMDCPUList;
     }
+
     public List<String> listenforCommand() {
         return Arrays.asList(scan.next().split(" "));
     }
+
     public void sysOut(String string) {
         System.out.println(string);
     }
+
     public void setMotherboardList(List<Motherboard> motherboardList) {
         this.motherboardList = motherboardList;
     }
+
     public void setCpuList(List<CPU> cpuList) {
         this.cpuList = cpuList;
+    }
+
+    public double calculateRAMPrices(String s) {
+        String sub = null;
+        if (s.length() == 9) {
+            sub = s.substring(s.length() - 4);
+        } else if (s.length() == 8) {
+            sub = s.substring(s.length() - 3);
+        }
+        assert sub != null;
+        int su = Integer.parseInt(sub);
+        return Math.round(0.0025 * Math.pow(su, 1.01));
     }
 }
