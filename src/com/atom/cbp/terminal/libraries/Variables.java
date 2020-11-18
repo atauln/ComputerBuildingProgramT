@@ -10,6 +10,7 @@ public class Variables {
     public List<CPU> intelCPUList = new ArrayList<>();
     public List<CPU> amdCPUList = new ArrayList<>();
     public List<Motherboard> motherboardList = new ArrayList<>();
+    public List<GPU> gpuList = new ArrayList<>();
 
     public void initLists() {
         //INTEL CPUS
@@ -45,6 +46,9 @@ public class Variables {
         motherboardList.add(new Motherboard("ASUS Prime Z390-A","LGA1151", "ATX", 2, 5, 1, 2, 4, 64, 6, 3, 2, false, false, 180));
         motherboardList.add(new Motherboard("ASRock B450M PRO4", "AM4", "Micro ATX", 2, 5, 1, 2, 4, 64, 4, 2, 2, false, false, 83));
         motherboardList.add(new Motherboard("MSI MAG B550M BAZOOKA", "AM4", "Micro ATX", 2, 4, 0, 2, 4, 128, 4, 1, 2, false, false, 130));
+
+        //GPUs
+        gpuList.add(new GPU("NVIDIA Geforce RTX 3080", "Q3' 2020", "GDDR6X", 10, 8704, 1440, 1710, 600));
     }
     public List<CPU> getAmdCPUList() {
         return amdCPUList;
@@ -70,4 +74,5 @@ public class Variables {
     public List<Motherboard> getMotherboardList() {
         return motherboardList;
     }
+    public List<GPU> getGpuList() { return gpuList;}
 }

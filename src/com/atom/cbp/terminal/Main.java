@@ -13,6 +13,7 @@ public class Main {
     List<CPU> AMDCPUList = new ArrayList<>();
     List<CPU> cpuList = new ArrayList<>();
     List<Motherboard> motherboardList = new ArrayList<>();
+    List<GPU> gpuList = new ArrayList<>();
     CPU currentCPU;
 
     //Main class
@@ -24,6 +25,7 @@ public class Main {
         main.setAMDCPUList(var.getAmdCPUList());
         main.setCpuList(var.getCPUList());
         main.setMotherboardList(var.getMotherboardList());
+        main.setGpuList(var.getGpuList());
         while (true) {
             var.setDay(var.getDay() + 1);
             main.day(var.getDay());
@@ -77,12 +79,18 @@ public class Main {
                             sysOut(motherboardList.indexOf(motherboard) + 1 + ". " + motherboard.getName() + " ($" + motherboard.getPrice() + ")");
                         }
                         sysOut("----------");
+                    } else if (command.get(1).equals("gpu")) {
+                        sysOut("----------\nGPUs:");
+                        for (GPU gpu : gpuList) {
+                            sysOut(gpuList.indexOf(gpu) + 1 + ". " + gpu.getName() + " ($" + gpu.getPrice() + ")");
+                        }
+                        sysOut("----------");
                     } else {
                         sysOut("Second arg was invalid!");
                     }
                 } catch (Exception e) {
                     if (e instanceof IndexOutOfBoundsException) {
-                        sysOut("----------\nTypes:\ncpu\n----------");
+                        sysOut("----------\nTypes:\ncpu\nmotherboard\ngpu\n----------");
                     }
                 }
             } else if (command.get(0).equals("details")) {
@@ -142,7 +150,16 @@ public class Main {
                             sysOut("----------" + "\nMotherboard details: " + "\nName: " + motherboard.getName() + "\nSocket: " + motherboard.getSocket() + "\nSize: " + motherboard.getSize() + "\nUSB Ports: " + motherboard.getUsb2Ports() + " USB-2 ports, " + motherboard.getUsb3Ports() + " USB-3 ports, " + motherboard.getUsbCPorts() + " USB-C ports" + "\nOutputs: " + motherboard.getNumOutputs() + "\nPCIe Slots: " + motherboard.getPcieSlots() + "\nRAM Slots: " + motherboard.getRamSlots() + " (with " + motherboard.getMaxMemory() + " gb of maximum memory)" + "\nNVME Slots: " + motherboard.getNvmeSlots() + "\nSATA Ports: " + motherboard.getSataSlots() + "\nIntegrated WiFi: " + motherboard.isIntWiFi() + "\nIntegrated Bluetooth: " + motherboard.isIntBT() + "\nPrice: $" + motherboard.getPrice() + "\n----------");
                         } catch (Exception e) {
                             if (e instanceof IndexOutOfBoundsException) {
-                                sysOut("Please use a number for the details of the item.");
+                                sysOut("Please use a number for the details of the item!");
+                            }
+                        }
+                    } else if (command.get(1).equals("gpu")) {
+                        try {
+                            GPU gpu = gpuList.get(Integer.parseInt(command.get(2)) - 1);
+                            sysOut("----------" + "\nGPU Details:" + "\nName: " + gpu.getName() + "\nRelease Date: " + gpu.getReleaseDate() + "\nCore clock: " + gpu.getBaseClock() + " MHz (Boost Clock: " + gpu.getBoostClock() + " MHz)" + "\nMemory: " + gpu.getMemorySize() + "GB " + gpu.getMemoryType() + "\nCores: " + gpu.getCores() + "\nPrice: $" + gpu.getPrice() + "\n----------");
+                        } catch (Exception e) {
+                            if (e instanceof IndexOutOfBoundsException) {
+                                sysOut("Please use a number for the details of the item!");
                             }
                         }
                     } else {
@@ -150,7 +167,7 @@ public class Main {
                     }
                 } catch (Exception e) {
                     if (e instanceof IndexOutOfBoundsException) {
-                        sysOut("----------\nTypes:\ncpu\nmotherboard\n----------");
+                        sysOut("----------\nTypes:\ncpu\nmotherboard\ngpu\n----------");
                     }
                 }
             } else if (command.get(0).equals("startbuild")) {
@@ -263,6 +280,25 @@ public class Main {
                 }
             }
         }
+        while (pcPartsList.size() != 4) {
+            GPU chosenGPU;
+            sysOut("**********\nSelect your GPU: ");
+            for (GPU gpu : gpuList) {
+                sysOut(gpuList.indexOf(gpu) + 1 + ". " + gpu.getName() + " ($" + gpu.getPrice() + ")");
+            }
+            sysOut("**********");
+            String userCommand = scan.next();
+            if (userCommand.equals("stop") || userCommand.equals("end")) {
+                return emptyList;
+            }
+            try {
+                chosenGPU = gpuList.get(Integer.parseInt(userCommand) - 1);
+            } catch (Exception e) {
+                if (e instanceof IndexOutOfBoundsException) {
+                    sysOut("Please type a valid integer!");
+                }
+            }
+        }
         return pcPartsList;
     }
 
@@ -289,6 +325,10 @@ public class Main {
 
     public void setCpuList(List<CPU> cpuList) {
         this.cpuList = cpuList;
+    }
+
+    public void setGpuList(List<GPU> gpuList) {
+        this.gpuList = gpuList;
     }
 
     public double calculateRAMPrices(String s) {
