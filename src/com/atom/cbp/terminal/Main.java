@@ -1,7 +1,6 @@
 package com.atom.cbp.terminal;
 
 import com.atom.cbp.terminal.libraries.*;
-
 import java.util.*;
 
 public class Main {
