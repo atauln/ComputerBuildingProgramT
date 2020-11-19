@@ -99,7 +99,8 @@ public class Main {
                         try {
                             if (command.get(2).equals("intel")) {
                                 try {
-                                    CPU currentCPU = intelCPUList.get(Integer.parseInt(command.get(3)) - 1);
+                                    currentCPU = intelCPUList.get(Integer.parseInt(command.get(3)) - 1);
+                                    getCPUdetails(currentCPU);
                                 } catch (Exception e) {
                                     if (e instanceof IndexOutOfBoundsException) {
                                         sysOut("Please use a number for the details of an item!");
@@ -108,34 +109,12 @@ public class Main {
                             } else if (command.get(2).equals("amd")) {
                                 try {
                                     currentCPU = AMDCPUList.get(Integer.parseInt(command.get(3)) - 1);
+                                    getCPUdetails(currentCPU);
                                 } catch (Exception e) {
                                     if (e instanceof IndexOutOfBoundsException) {
                                         sysOut("Please use a number for the details of an item!");
                                     }
                                 }
-                                sysOut("----------");
-                                sysOut("CPU Details");
-                                sysOut("Name: " + currentCPU.getName());
-                                sysOut("Socket: " + currentCPU.getSocket());
-                                sysOut("Architecture/Family: " + currentCPU.getArchitecture());
-                                sysOut("Core Count: " + currentCPU.getCoreCount());
-                                if (currentCPU.getHyperThreading() > currentCPU.getCoreCount()) {
-                                    sysOut("Hyperthreading: true (" + currentCPU.getHyperThreading() + " cores)");
-                                } else {
-                                    sysOut("Hyperthreading: false");
-                                }
-                                sysOut("Processing Speed: " + currentCPU.getGhz() + " GHz");
-                                if (currentCPU.getTurboBoostTo() > currentCPU.getGhz()) {
-                                    sysOut("Turbo Boost: true (boosts up to " + currentCPU.getTurboBoostTo() + " GHz)");
-                                } else {
-                                    sysOut("Turbo Boost: false");
-                                }
-                                sysOut("Overclockable: " + currentCPU.isOverclockable());
-                                sysOut("Memory: Max of " + currentCPU.getMaxMemory() + " GB\nMemory Type: " + currentCPU.getMemoryType());
-                                sysOut("TDP: " + currentCPU.getTDP() + "W");
-                                sysOut("Release Date: " + currentCPU.getReleaseDate());
-                                sysOut("Price: $" + currentCPU.getPrice());
-                                sysOut("----------");
                             } else {
                                 sysOut("Third arg was invalid!");
                             }
@@ -314,10 +293,6 @@ public class Main {
                 }
             }
         }
-
-
-
-
         sysOut("**********\nPC Details: " + "\nCPU: " + ((CPU) pcPartsList.get(0)).getName() + "\nMotherboard: " + ((Motherboard) pcPartsList.get(1)).getName() + "\nRAM: " + ((RAM[]) pcPartsList.get(2)).length + "x" + (((RAM[]) pcPartsList.get(2))[0]).getCapacity() + "GB " + (((RAM[]) pcPartsList.get(2))[0]).getType() + "-" + (((RAM[]) pcPartsList.get(2))[0]).getSpeed() + "\nGPU(s): " + ((GPU[]) pcPartsList.get(3))[0].getName() + " (" + ((GPU[]) pcPartsList.get(3)).length + ")\n**********");
         return pcPartsList;
     }
@@ -361,5 +336,31 @@ public class Main {
         assert sub != null;
         int su = Integer.parseInt(sub);
         return Math.round(0.0025 * Math.pow(su, 1.01));
+    }
+
+    public void getCPUdetails(CPU currentCPU) {
+        sysOut("----------");
+        sysOut("CPU Details");
+        sysOut("Name: " + currentCPU.getName());
+        sysOut("Socket: " + currentCPU.getSocket());
+        sysOut("Architecture/Family: " + currentCPU.getArchitecture());
+        sysOut("Core Count: " + currentCPU.getCoreCount());
+        if (currentCPU.getHyperThreading() > currentCPU.getCoreCount()) {
+            sysOut("Hyperthreading: true (" + currentCPU.getHyperThreading() + " cores)");
+        } else {
+            sysOut("Hyperthreading: false");
+        }
+        sysOut("Processing Speed: " + currentCPU.getGhz() + " GHz");
+        if (currentCPU.getTurboBoostTo() > currentCPU.getGhz()) {
+            sysOut("Turbo Boost: true (boosts up to " + currentCPU.getTurboBoostTo() + " GHz)");
+        } else {
+            sysOut("Turbo Boost: false");
+        }
+        sysOut("Overclockable: " + currentCPU.isOverclockable());
+        sysOut("Memory: Max of " + currentCPU.getMaxMemory() + " GB\nMemory Type: " + currentCPU.getMemoryType());
+        sysOut("TDP: " + currentCPU.getTDP() + "W");
+        sysOut("Release Date: " + currentCPU.getReleaseDate());
+        sysOut("Price: $" + currentCPU.getPrice());
+        sysOut("----------");
     }
 }

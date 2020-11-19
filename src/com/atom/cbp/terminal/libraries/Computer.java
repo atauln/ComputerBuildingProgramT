@@ -1,20 +1,21 @@
 package com.atom.cbp.terminal.libraries;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Computer {
     RAM[] rams;
     CPU cpu;
     Motherboard mobo;
     GPU[] gpus;
-    SSD[] ssds;
-    HDD[] hdds;
+    List<Object> driveList = new ArrayList<>();
 
-    public Computer(CPU cpu, Motherboard mobo, RAM[] rams, GPU[] gpus, SSD[] ssds, HDD[] hdds) {
+    public Computer(CPU cpu, Motherboard mobo, RAM[] rams, GPU[] gpus, List<Object> driveList) {
         this.rams = rams;
         this.mobo = mobo;
         this.cpu = cpu;
         this.gpus = gpus;
-        this.ssds = ssds;
-        this.hdds = hdds;
+        this.driveList = driveList;
     }
 
     public RAM[] getRams() {
@@ -22,12 +23,6 @@ public class Computer {
     }
     public void setRams(RAM[] rams) {
         this.rams = rams;
-    }
-    public void setSsds(SSD[] ssds) {
-        this.ssds = ssds;
-    }
-    public void setHdds(HDD[] hdds) {
-        this.hdds = hdds;
     }
     public CPU getCpu() {
         return cpu;
@@ -46,11 +41,5 @@ public class Computer {
     }
     public void setGpus(GPU[] gpus) {
         this.gpus = gpus;
-    }
-    public SSD[] getSsds() {
-        return ssds;
-    }
-    public HDD[] getHdds() {
-        return hdds;
     }
 }
