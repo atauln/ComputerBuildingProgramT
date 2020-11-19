@@ -2,6 +2,7 @@ package com.atom.cbp.terminal.libraries;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Variables {
     public int day = 0;
@@ -11,6 +12,9 @@ public class Variables {
     public List<CPU> amdCPUList = new ArrayList<>();
     public List<Motherboard> motherboardList = new ArrayList<>();
     public List<GPU> gpuList = new ArrayList<>();
+    public List<SSD> ssdList = new ArrayList<>();
+    public List<HDD> hddList = new ArrayList<>();
+    public List<Object> driveList = new ArrayList<>();
 
     public void initLists() {
         //INTEL CPUS
@@ -47,8 +51,22 @@ public class Variables {
         motherboardList.add(new Motherboard("ASRock B450M PRO4", "AM4", "Micro ATX", 2, 5, 1, 2, 4, 64, 4, 2, 2, false, false, 83));
         motherboardList.add(new Motherboard("MSI MAG B550M BAZOOKA", "AM4", "Micro ATX", 2, 4, 0, 2, 4, 128, 4, 1, 2, false, false, 130));
 
+
         //GPUs
         gpuList.add(new GPU("NVIDIA Geforce RTX 3080", "Q3' 2020", "GDDR6X", 10, 8704, 1440, 1710, 600, 320));
+
+
+        //SSDs
+        ssdList.add(new SSD("WD BLUE 3D", new int[]{250, 500, 1000, 2000, 4000}, "SATA", 560, 530));
+        ssdList.add(new SSD("SAMSUNG 860 EVO", new int[]{250, 500, 1000, 2000, 4000}, "SATA", 550, 520));
+        ssdList.add(new SSD("WD BLACK SN750", new int[]{250, 500, 1000, 2000}, "NVMe", 3000, 3470));
+
+        //HDDs
+        hddList.add(new HDD("WD Red Plus", 5400, Map.ofEntries(Map.entry(64, new int[]{1000, 2000, 3000, 4000, 6000}), Map.entry(256, new int[]{8000, 10000, 12000}), Map.entry(512, new int[]{14000}))));
+
+        //Complete drive list
+        driveList.addAll(ssdList);
+        driveList.addAll(hddList);
     }
     public List<CPU> getAmdCPUList() {
         return amdCPUList;
@@ -75,4 +93,13 @@ public class Variables {
         return motherboardList;
     }
     public List<GPU> getGpuList() { return gpuList;}
+    public List<SSD> getSsdList() {
+        return ssdList;
+    }
+    public List<HDD> getHddList() {
+        return hddList;
+    }
+    public List<Object> getDriveList() {
+        return driveList;
+    }
 }

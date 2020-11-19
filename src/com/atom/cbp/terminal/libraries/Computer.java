@@ -5,12 +5,16 @@ public class Computer {
     CPU cpu;
     Motherboard mobo;
     GPU[] gpus;
+    SSD[] ssds;
+    HDD[] hdds;
 
-    public Computer(CPU cpu, Motherboard mobo, RAM[] rams, GPU[] gpus) {
+    public Computer(CPU cpu, Motherboard mobo, RAM[] rams, GPU[] gpus, SSD[] ssds, HDD[] hdds) {
         this.rams = rams;
         this.mobo = mobo;
         this.cpu = cpu;
         this.gpus = gpus;
+        this.ssds = ssds;
+        this.hdds = hdds;
     }
 
     public RAM[] getRams() {
@@ -18,6 +22,12 @@ public class Computer {
     }
     public void setRams(RAM[] rams) {
         this.rams = rams;
+    }
+    public void setSsds(SSD[] ssds) {
+        this.ssds = ssds;
+    }
+    public void setHdds(HDD[] hdds) {
+        this.hdds = hdds;
     }
     public CPU getCpu() {
         return cpu;
@@ -36,5 +46,11 @@ public class Computer {
     }
     public void setGpus(GPU[] gpus) {
         this.gpus = gpus;
+    }
+    public SSD[] getSsds() {
+        return ssds;
+    }
+    public HDD[] getHdds() {
+        return hdds;
     }
 }
