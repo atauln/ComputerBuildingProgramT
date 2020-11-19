@@ -1,5 +1,7 @@
 package com.atom.cbp.terminal.libraries;
 
+import com.atom.cbp.terminal.libraries.Drives.Drive;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +10,8 @@ public class Computer {
     CPU cpu;
     Motherboard mobo;
     GPU[] gpus;
-    List<Object> driveList = new ArrayList<>();
-
-    public Computer(CPU cpu, Motherboard mobo, RAM[] rams, GPU[] gpus, List<Object> driveList) {
+    List<Drive> driveList;
+    public Computer(CPU cpu, Motherboard mobo, RAM[] rams, GPU[] gpus, List<Drive> driveList) {
         this.rams = rams;
         this.mobo = mobo;
         this.cpu = cpu;
@@ -41,5 +42,11 @@ public class Computer {
     }
     public void setGpus(GPU[] gpus) {
         this.gpus = gpus;
+    }
+    public List<Drive> getDriveList() {
+        return driveList;
+    }
+    public void setDriveList(List<Drive> driveList) {
+        this.driveList = driveList;
     }
 }

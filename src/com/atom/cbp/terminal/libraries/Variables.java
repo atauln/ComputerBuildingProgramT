@@ -1,8 +1,10 @@
 package com.atom.cbp.terminal.libraries;
 
+import com.atom.cbp.terminal.libraries.Drives.*;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class Variables {
     public int day = 0;
@@ -12,6 +14,9 @@ public class Variables {
     public List<CPU> amdCPUList = new ArrayList<>();
     public List<Motherboard> motherboardList = new ArrayList<>();
     public List<GPU> gpuList = new ArrayList<>();
+    List<SSD> ssdList = new ArrayList<>();
+    List<HDD> hddList = new ArrayList<>();
+    List<Drive> driveList = new ArrayList<>();
 
     public void initLists() {
         //INTEL CPUS
@@ -52,6 +57,24 @@ public class Variables {
         //GPUs
         gpuList.add(new GPU("NVIDIA Geforce RTX 3080", "Q3' 2020", "GDDR6X", 10, 8704, 1440, 1710, 600, 320));
 
+
+        //SSDs
+        ssdList.add(new SSD("Samsung 860 EVO Series", new ArrayList<>(Arrays.asList(250, 500, 1000, 2000, 4000)), 550, 520, "SATA"));
+        ssdList.add(new SSD("T-FORCE VulcanG", new ArrayList<>(Arrays.asList(512, 1000)), 550, 500, "SATA"));
+        ssdList.add(new SSD("WD BLUE", new ArrayList<>(Arrays.asList(250, 500, 1000, 2000, 4000)), 560, 530, "SATA"));
+
+        ssdList.add(new SSD("Samsung 970 EVO Plus", new ArrayList<>(Arrays.asList(250, 500, 1000, 2000)), 3500, 3300, "NVMe"));
+        ssdList.add(new SSD("WD BLACK SN750", new ArrayList<>(Arrays.asList(250, 500, 1000, 2000)), 3470, 3000, "NVMe"));
+        ssdList.add(new SSD("Sabrent ROCKET", new ArrayList<>(Arrays.asList(256, 512, 1000, 2000, 4000)), 3400, 3000, "NVMe"));
+
+        //HDDs
+        hddList.add(new HDD("Seagate IronWolf NAS", new ArrayList<>(Arrays.asList(1000, 2000, 3000, 4000, 6000, 8000, 10000, 12000, 14000, 16000)), 7200));
+        hddList.add(new HDD("WD Red Plus", new ArrayList<>(Arrays.asList(1000, 2000, 3000, 4000, 6000, 8000, 10000, 12000, 14000)), 5400));
+        hddList.add(new HDD("TOSHIBA NAS Systems N300", new ArrayList<>(Arrays.asList(4000, 6000, 8000, 10000, 12000, 14000)), 7200));
+
+        //Complete drive list
+        driveList.addAll(ssdList);
+        driveList.addAll(hddList);
     }
     public List<CPU> getAmdCPUList() {
         return amdCPUList;
