@@ -37,11 +37,11 @@ public class Main {
         sysOut("It is now day " + day + ".");
         while (true) {
             List<String> command = listenforCommand();
-            if (command.get(0).equals("end")) {
+            if (command.get(0).equals("end") || command.get(0).equals("]end")) {
                 break;
             }
             //checking command, and outputting result
-            if (command.get(0).equals("help")) {
+            if (command.get(0).equals("help") || command.get(0).equals("]help")) {
                 sysOut("----------");
                 sysOut("Commands currently available: ");
                 sysOut("startbuild - start building your pc");
@@ -49,9 +49,9 @@ public class Main {
                 sysOut("shop [type] [brand] - look at the current catalog of items");
                 sysOut("details [type] [brand] [#] - get details for an item");
                 sysOut("----------");
-            } else if (command.get(0).equals("bal") || command.get(0).equals("balance")) {
+            } else if (command.get(0).equals("bal") || command.get(0).equals("balance") || command.get(0).equals("]bal") || command.get(0).equals("]balance")) {
                 sysOut("----------\nBalance: " + var.getBal() + "\n----------");
-            } else if (command.get(0).equals("shop")) {
+            } else if (command.get(0).equals("shop") || command.get(0).equals("]shop")) {
                 try {
                     if (command.get(1).equals("cpu")) {
                         sysOut("----------\nCPUs:");
@@ -93,7 +93,7 @@ public class Main {
                         sysOut("----------\nTypes:\ncpu\nmotherboard\ngpu\n----------");
                     }
                 }
-            } else if (command.get(0).equals("details")) {
+            } else if (command.get(0).equals("details") || command.get(0).equals("]details")) {
                 try {
                     if (command.get(1).equals("cpu")) {
                         try {
@@ -170,7 +170,7 @@ public class Main {
                         sysOut("----------\nTypes:\ncpu\nmotherboard\ngpu\n----------");
                     }
                 }
-            } else if (command.get(0).equals("startbuild")) {
+            } else if (command.get(0).equals("startbuild") || command.get(0).equals("]startbuild")) {
                 List<Object> obj = pcBuild();
             } else {
                 sysOut("First arg was invalid!");
@@ -188,7 +188,7 @@ public class Main {
                 sysOut((cpuList.indexOf(cpu) + 1) + ". " + cpu.getName() + " ($" + cpu.getPrice() + ")");
             }
             sysOut("**********");
-            String userCommand = scan.next();
+            String userCommand = scan.nextLine();
             if (userCommand.equals("stop") || userCommand.equals("end")) {
                 return emptyList;
             }
@@ -212,7 +212,7 @@ public class Main {
                 sysOut(motherboardListA.indexOf(m) + 1 + ". " + ((Motherboard) m).getName() + " ($" + ((Motherboard) m).getPrice() + ")");
             }
             sysOut("**********");
-            String userCommand = scan.next();
+            String userCommand = scan.nextLine();
             if (userCommand.equals("stop") || userCommand.equals("end")) {
                 return emptyList;
             }
@@ -250,7 +250,7 @@ public class Main {
                 sysOut(chosenSpeeds.indexOf(s) + 1 + ". " + s + " ($" + calculateRAMPrices(s) + " per gb)");
             }
             sysOut("**********");
-            String userCommand = scan.next();
+            String userCommand = scan.nextLine();
             if (userCommand.equals("end") || userCommand.equals("stop")) {
                 return emptyList;
             }
@@ -264,7 +264,7 @@ public class Main {
                 sysOut(ramConfig.indexOf(s) + 1 + ". " + s + "gb" + " ($" + Math.round(calculateRAMPrices(ramSpeedChoice) * Character.getNumericValue(s.toCharArray()[0]) * Integer.parseInt(s.substring(s.length() - (s.length() - 2)))) + ")");
             }
             sysOut("**********");
-            userCommand = scan.next();
+            userCommand = scan.nextLine();
             if (userCommand.equals("stop") || userCommand.equals("end")) {
                 return emptyList;
             }
@@ -287,7 +287,7 @@ public class Main {
                 sysOut(gpuList.indexOf(gpu) + 1 + ". " + gpu.getName() + " ($" + gpu.getPrice() + ")");
             }
             sysOut("**********");
-            String userCommand = scan.next();
+            String userCommand = scan.nextLine();
             if (userCommand.equals("stop") || userCommand.equals("end")) {
                 return emptyList;
             }
@@ -299,7 +299,7 @@ public class Main {
                 }
             }
             sysOut("**********\nHow many GPUs would you like?: (max: " + ((Motherboard) pcPartsList.get(1)).getPcieSlots() + ")");
-            userCommand = scan.next();
+            userCommand = scan.nextLine();
             try {
                 if (0 < Integer.parseInt(userCommand) && Integer.parseInt(userCommand) <= ((Motherboard) pcPartsList.get(1)).getPcieSlots()) {
                     GPU[] gpus = new GPU[Integer.parseInt(userCommand)];
@@ -332,7 +332,7 @@ public class Main {
     }
 
     public List<String> listenforCommand() {
-        return Arrays.asList(scan.next().split(" "));
+        return Arrays.asList(scan.nextLine().split(" "));
     }
 
     public void sysOut(String string) {

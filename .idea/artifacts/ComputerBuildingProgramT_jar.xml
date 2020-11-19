@@ -3,6 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/ComputerBuildingProgramT_jar</output-path>
     <root id="archive" name="ComputerBuildingProgramT.jar">
       <element id="module-output" name="ComputerBuildingProgramT" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/META-INF" />
     </root>
   </artifact>
 </component>
