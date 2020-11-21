@@ -22,4 +22,7 @@ public class Drive {
     public int getChosenCapacity() {
         return chosenCapacity;
     }
+    public void setChosenCapacity(int chosenCapacity) {
+        this.chosenCapacity = chosenCapacity;
+    }
 }

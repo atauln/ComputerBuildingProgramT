@@ -304,6 +304,7 @@ public class Main {
         List<Drive> sataList = new ArrayList<>();
         List<SSD> chosenNVMeList = new ArrayList<>();
         List<Drive> chosenSATAList = new ArrayList<>();
+        List<Drive> chosenDriveList = new ArrayList<>();
         for (Drive drive : driveList) {
             if (drive instanceof SSD) {
                 if (((SSD) drive).getInterf().equals("NVMe")) {
@@ -320,7 +321,7 @@ public class Main {
         while (pcPartsList.size() != 5) {
             int nvmeSlots = ((Motherboard) pcPartsList.get(1)).getNvmeSlots() - chosenNVMeList.size();
             int sataSlots = ((Motherboard) pcPartsList.get(1)).getSataSlots() - chosenSATAList.size();
-            Drive chosenDrive;
+            Drive chosenDrive = null;
             if (nvmeSlots == 0) {
                 driveList.removeAll(nvmeList);
             }
@@ -335,13 +336,67 @@ public class Main {
                     sysOut(driveList.indexOf(drive) + 1 + ". " + drive.getName() + " [HDD]");
                 }
             }
-            sysOut("**********");
+            sysOut("**********\nYou can also type 'done' to finish.");
             String userCommand = scan.nextLine();
             if (userCommand.equals("stop") || userCommand.equals("end")) {
                 return emptyList;
             }
+            if (userCommand.equals("done")) {
+                if (nvmeList.size() >= 1 || sataList.size() >= 1) {
+                    chosenDriveList.addAll(chosenNVMeList);
+                    chosenDriveList.addAll(chosenSATAList);
+                    pcPartsList.add(chosenDriveList);
+                    break;
+                }
+            }
             try {
                 chosenDrive = driveList.get(Integer.parseInt(userCommand) - 1);
+            } catch (Exception e) {
+                sysOut(e.toString());
+            }
+            sysOut("**********\nSelect the capacity for your drive: ");
+            for (int capacityOpt : chosenDrive.getCapacities()) {
+                sysOut(chosenDrive.getCapacities().indexOf(capacityOpt) + 1 + ". " + capacityOpt + "GB"); //ADD PRICE
+            }
+            sysOut("**********");
+            userCommand = scan.nextLine();
+            try {
+                chosenDrive.setChosenCapacity(chosenDrive.getCapacities().get(Integer.parseInt(userCommand) - 1));
+            } catch (Exception e) {
+                sysOut(e.toString());
+            }
+            if (chosenDrive instanceof SSD) {
+                if (((SSD) chosenDrive).getInterf().equals("NVMe")) {
+                    sysOut("**********\nSelect the amount: (" + nvmeSlots + " NVMe slots)");
+                } else {
+                    sysOut("**********\nSelect the amount: (" + sataSlots + " SATA slots)");
+                }
+            } else {
+                sysOut("**********\nSelect the amount: (" + sataSlots + " SATA slots)");
+            }
+            userCommand = scan.nextLine();
+            try {
+                if (chosenDrive instanceof SSD) {
+                    if (((SSD) chosenDrive).getInterf().equals("NVMe")) {
+                        if (Integer.parseInt(userCommand) > 0 && Integer.parseInt(userCommand) <= nvmeSlots) {
+                            for (int i=1; i <= Integer.parseInt(userCommand); i++) {
+                                chosenNVMeList.add((SSD) chosenDrive);
+                            }
+                        }
+                    } else {
+                        if (Integer.parseInt(userCommand) > 0 && Integer.parseInt(userCommand) <= sataSlots) {
+                            for (int i=1; i <= Integer.parseInt(userCommand); i++) {
+                                chosenSATAList.add(chosenDrive);
+                            }
+                        }
+                    }
+                } else {
+                    if (Integer.parseInt(userCommand) > 0 && Integer.parseInt(userCommand) <= sataSlots) {
+                        for (int i=1; i <= Integer.parseInt(userCommand); i++) {
+                            chosenSATAList.add(chosenDrive);
+                        }
+                    }
+                }
             } catch (Exception e) {
                 sysOut(e.toString());
             }
