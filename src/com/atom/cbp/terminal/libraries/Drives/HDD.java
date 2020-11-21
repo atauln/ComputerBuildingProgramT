@@ -6,4 +6,11 @@ public class HDD extends Drive {
         super(name, capacities);
         this.rpm = rpm;
     }
+    public HDD(String name, List<Integer> capacities, int chosenCapacity, int rpm) {
+        super(name, capacities, chosenCapacity);
+        this.rpm = rpm;
+    }
+    public int getRpm() {
+        return rpm;
+    }
 }

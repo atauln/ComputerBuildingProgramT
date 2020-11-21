@@ -1,6 +1,8 @@
 package com.atom.cbp.terminal;
 
 import com.atom.cbp.terminal.libraries.*;
+import com.atom.cbp.terminal.libraries.Drives.*;
+
 import java.util.*;
 
 public class Main {
@@ -13,6 +15,9 @@ public class Main {
     List<CPU> cpuList = new ArrayList<>();
     List<Motherboard> motherboardList = new ArrayList<>();
     List<GPU> gpuList = new ArrayList<>();
+    List<Drive> driveList = new ArrayList<>();
+    List<SSD> ssdList = new ArrayList<>();
+    List<HDD> hddList = new ArrayList<>();
     CPU currentCPU;
 
     //Main class
@@ -25,6 +30,9 @@ public class Main {
         main.setCpuList(var.getCPUList());
         main.setMotherboardList(var.getMotherboardList());
         main.setGpuList(var.getGpuList());
+        main.setSsdList(var.getSsdList());
+        main.setHddList(var.getHddList());
+        main.setDriveList(var.getDriveList());
         while (true) {
             var.setDay(var.getDay() + 1);
             main.day(var.getDay());
@@ -292,6 +300,52 @@ public class Main {
                 }
             }
         }
+        List<SSD> nvmeList = new ArrayList<>();
+        List<Drive> sataList = new ArrayList<>();
+        List<SSD> chosenNVMeList = new ArrayList<>();
+        List<Drive> chosenSATAList = new ArrayList<>();
+        for (Drive drive : driveList) {
+            if (drive instanceof SSD) {
+                if (((SSD) drive).getInterf().equals("NVMe")) {
+                    nvmeList.add((SSD) drive);
+                } else if (((SSD) drive).getInterf().equals("SATA")) {
+                    sataList.add((SSD) drive);
+                }
+            } else if (drive instanceof HDD) {
+                sataList.add((HDD) drive);
+            } else {
+                sysOut("Drive unable to be added!");
+            }
+        }
+        while (pcPartsList.size() != 5) {
+            int nvmeSlots = ((Motherboard) pcPartsList.get(1)).getNvmeSlots() - chosenNVMeList.size();
+            int sataSlots = ((Motherboard) pcPartsList.get(1)).getSataSlots() - chosenSATAList.size();
+            Drive chosenDrive;
+            if (nvmeSlots == 0) {
+                driveList.removeAll(nvmeList);
+            }
+            if (sataSlots == 0) {
+                driveList.removeAll(sataList);
+            }
+            sysOut("**********\nChoose a drive: (" + sataSlots + " SATA slots, " + nvmeSlots + " NVMe slots)");
+            for (Drive drive : driveList) {
+                if (drive instanceof SSD) {
+                    sysOut(driveList.indexOf(drive) + 1 + ". " + drive.getName() + " [SSD]");
+                } else if (drive instanceof HDD) {
+                    sysOut(driveList.indexOf(drive) + 1 + ". " + drive.getName() + " [HDD]");
+                }
+            }
+            sysOut("**********");
+            String userCommand = scan.nextLine();
+            if (userCommand.equals("stop") || userCommand.equals("end")) {
+                return emptyList;
+            }
+            try {
+                chosenDrive = driveList.get(Integer.parseInt(userCommand) - 1);
+            } catch (Exception e) {
+                sysOut(e.toString());
+            }
+        }
         sysOut("**********\nPC Details: " + "\nCPU: " + ((CPU) pcPartsList.get(0)).getName() + "\nMotherboard: " + ((Motherboard) pcPartsList.get(1)).getName() + "\nRAM: " + ((RAM[]) pcPartsList.get(2)).length + "x" + (((RAM[]) pcPartsList.get(2))[0]).getCapacity() + "GB " + (((RAM[]) pcPartsList.get(2))[0]).getType() + "-" + (((RAM[]) pcPartsList.get(2))[0]).getSpeed() + "\nGPU(s): " + ((GPU[]) pcPartsList.get(3))[0].getName() + " (" + ((GPU[]) pcPartsList.get(3)).length + ")\n**********");
         return pcPartsList;
     }
@@ -300,31 +354,24 @@ public class Main {
     public void setIntelCPUList(List<CPU> intelCPUList) {
         this.intelCPUList = intelCPUList;
     }
-
     public void setAMDCPUList(List<CPU> AMDCPUList) {
         this.AMDCPUList = AMDCPUList;
     }
-
     public List<String> listenforCommand() {
         return Arrays.asList(scan.nextLine().split(" "));
     }
-
     public void sysOut(String string) {
         System.out.println(string);
     }
-
     public void setMotherboardList(List<Motherboard> motherboardList) {
         this.motherboardList = motherboardList;
     }
-
     public void setCpuList(List<CPU> cpuList) {
         this.cpuList = cpuList;
     }
-
     public void setGpuList(List<GPU> gpuList) {
         this.gpuList = gpuList;
     }
-
     public double calculateRAMPrices(String s) {
         String sub = null;
         if (s.length() == 9) {
@@ -336,7 +383,6 @@ public class Main {
         int su = Integer.parseInt(sub);
         return Math.round(0.0025 * Math.pow(su, 1.01));
     }
-
     public void getCPUdetails(CPU currentCPU) {
         sysOut("----------");
         sysOut("CPU Details");
@@ -361,5 +407,14 @@ public class Main {
         sysOut("Release Date: " + currentCPU.getReleaseDate());
         sysOut("Price: $" + currentCPU.getPrice());
         sysOut("----------");
+    }
+    public void setDriveList(List<Drive> driveList) {
+        this.driveList = driveList;
+    }
+    public void setSsdList(List<SSD> ssdList) {
+        this.ssdList = ssdList;
+    }
+    public void setHddList(List<HDD> hddList) {
+        this.hddList = hddList;
     }
 }

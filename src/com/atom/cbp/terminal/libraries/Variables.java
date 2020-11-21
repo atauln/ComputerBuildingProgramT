@@ -100,5 +100,16 @@ public class Variables {
     public List<Motherboard> getMotherboardList() {
         return motherboardList;
     }
-    public List<GPU> getGpuList() { return gpuList;}
+    public List<GPU> getGpuList() {
+        return gpuList;
+    }
+    public List<SSD> getSsdList() {
+        return ssdList;
+    }
+    public List<HDD> getHddList() {
+        return hddList;
+    }
+    public List<Drive> getDriveList() {
+        return driveList;
+    }
 }

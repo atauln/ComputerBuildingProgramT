@@ -9,6 +9,12 @@ public class SSD extends Drive {
         this.readSpeed = readSpeed;
         this.writeSpeed = writeSpeed;
     }
+    public SSD(String name, List<Integer> capacities, int chosenCapacity, int readSpeed, int writeSpeed, String interf) {
+        super(name, capacities, chosenCapacity);
+        this.interf = interf;
+        this.readSpeed = readSpeed;
+        this.writeSpeed = writeSpeed;
+    }
     public int getReadSpeed() {
         return readSpeed;
     }
