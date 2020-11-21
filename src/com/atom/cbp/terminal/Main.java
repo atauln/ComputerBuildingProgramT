@@ -196,7 +196,7 @@ public class Main {
                                             "\nWrite Speeds: " + ssd.getWriteSpeed() +
                                             "\nCapacities: ");
                                     for (int cap : ssd.getCapacities()) {
-                                        sysOut(" - " + cap + "GB");
+                                        sysOut(" - " + cap + "GB ($" + calculatePriceDrive(ssd, cap) + ")");
                                     }
                                 } catch (Exception e) {
                                     sysOut("Please use a valid integer!");
@@ -209,7 +209,7 @@ public class Main {
                                             "\nInterface: SATA\nRPM: " + hdd.getRpm() +
                                             "\nCapacities: ");
                                     for (int cap : hdd.getCapacities()) {
-                                        sysOut(" - " + cap + "GB");
+                                        sysOut(" - " + cap + "GB ($" + calculatePriceDrive(hdd, cap) + ")");
                                     }
                                 } catch (Exception e) {
                                     sysOut("Please use a valid integer!");
@@ -426,7 +426,7 @@ public class Main {
             }
             sysOut("**********\nSelect the capacity for your drive: ");
             for (int capacityOpt : chosenDrive.getCapacities()) {
-                sysOut(chosenDrive.getCapacities().indexOf(capacityOpt) + 1 + ". " + capacityOpt + "GB"); //ADD PRICE
+                sysOut(chosenDrive.getCapacities().indexOf(capacityOpt) + 1 + ". " + capacityOpt + "GB ($" + calculatePriceDrive(chosenDrive, capacityOpt) + ")"); //ADD PRICE
             }
             sysOut("**********");
             userCommand = scan.nextLine();
@@ -553,5 +553,27 @@ public class Main {
     }
     public void setHddList(List<HDD> hddList) {
         this.hddList = hddList;
+    }
+    public double calculatePriceDrive(Drive drive) {
+        if (drive instanceof SSD) {
+            if (((SSD) drive).getInterf().equals("NVMe")) {
+                return ((((Math.pow(((SSD) drive).getReadSpeed(), 2)) * drive.getChosenCapacity()) / (15000 * ((SSD) drive).getWriteSpeed())) * (Math.pow(0.99999, drive.getChosenCapacity())));
+            } else {
+                return ((((Math.pow(((SSD) drive).getReadSpeed(), 2)) * drive.getChosenCapacity()) / (5000 * ((SSD) drive).getWriteSpeed())) * (Math.pow(0.99999, drive.getChosenCapacity())));
+            }
+        } else {
+            return ((7*((HDD) drive).getRpm()) / drive.getChosenCapacity());
+        }
+    }
+    public double calculatePriceDrive(Drive drive, int cap) {
+        if (drive instanceof SSD) {
+            if (((SSD) drive).getInterf().equals("NVMe")) {
+                return ((((Math.pow(((SSD) drive).getReadSpeed(), 2)) * cap) / (15000 * ((SSD) drive).getWriteSpeed())) * (Math.pow(0.99999, cap)));
+            } else {
+                return ((((Math.pow(((SSD) drive).getReadSpeed(), 2)) * cap) / (5000 * ((SSD) drive).getWriteSpeed())) * (Math.pow(0.99999, cap)));
+            }
+        } else {
+            return ((7*((HDD) drive).getRpm()) / cap);
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.atom.cbp.terminal.libraries.Drives;
 import java.util.List;
 public class SSD extends Drive {
-    int readSpeed, writeSpeed;
+    int readSpeed, writeSpeed, price;
     String interf;
     public SSD(String name, List<Integer> capacities, int readSpeed, int writeSpeed, String interf) {
         super(name, capacities);
