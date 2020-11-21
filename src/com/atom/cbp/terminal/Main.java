@@ -401,7 +401,19 @@ public class Main {
                 sysOut(e.toString());
             }
         }
-        sysOut("**********\nPC Details: " + "\nCPU: " + ((CPU) pcPartsList.get(0)).getName() + "\nMotherboard: " + ((Motherboard) pcPartsList.get(1)).getName() + "\nRAM: " + ((RAM[]) pcPartsList.get(2)).length + "x" + (((RAM[]) pcPartsList.get(2))[0]).getCapacity() + "GB " + (((RAM[]) pcPartsList.get(2))[0]).getType() + "-" + (((RAM[]) pcPartsList.get(2))[0]).getSpeed() + "\nGPU(s): " + ((GPU[]) pcPartsList.get(3))[0].getName() + " (" + ((GPU[]) pcPartsList.get(3)).length + ")\n**********");
+        sysOut("**********\nPC Details: " + "\nCPU: " + ((CPU) pcPartsList.get(0)).getName() + "\nMotherboard: " + ((Motherboard) pcPartsList.get(1)).getName() + "\nRAM: " + ((RAM[]) pcPartsList.get(2)).length + "x" + (((RAM[]) pcPartsList.get(2))[0]).getCapacity() + "GB " + (((RAM[]) pcPartsList.get(2))[0]).getType() + "-" + (((RAM[]) pcPartsList.get(2))[0]).getSpeed() + "\nGPU(s): " + ((GPU[]) pcPartsList.get(3))[0].getName() + " (" + ((GPU[]) pcPartsList.get(3)).length + ")\nDrives:");
+        for (Drive drive : ((List<Drive>) pcPartsList.get(4))) {
+            if (drive instanceof SSD) {
+                if (((SSD) drive).getInterf().equals("NVMe")) {
+                    sysOut(" - " + drive.getName() + " [NVMe | SSD | " + drive.getChosenCapacity() + "GB]");
+                } else {
+                    sysOut(" - " + drive.getName() + " [SATA | SSD | " + drive.getChosenCapacity() + "GB]");
+                }
+            } else {
+                sysOut(" - " + drive.getName() + " [SATA | HDD | " + drive.getChosenCapacity() + "GB]");
+            }
+        }
+        sysOut("**********");
         return pcPartsList;
     }
 
