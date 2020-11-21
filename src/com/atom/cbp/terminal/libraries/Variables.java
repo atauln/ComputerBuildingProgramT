@@ -17,6 +17,7 @@ public class Variables {
     List<SSD> ssdList = new ArrayList<>();
     List<HDD> hddList = new ArrayList<>();
     List<Drive> driveList = new ArrayList<>();
+    List<Case> caseList = new ArrayList<>();
 
     public void initLists() {
         //INTEL CPUS
@@ -75,6 +76,10 @@ public class Variables {
         //Complete drive list
         driveList.addAll(ssdList);
         driveList.addAll(hddList);
+
+        //Cases
+        caseList.add(new Case("H510", "NZXT", "Tempered Glass", "ATX", 0, 1, 1, 70));
+        caseList.add(new Case("275R Airflow", "Corsair", "Tempered Glass", "ATX", 0, 2, 0, 80));
     }
     public List<CPU> getAmdCPUList() {
         return amdCPUList;
@@ -108,6 +113,9 @@ public class Variables {
     }
     public List<HDD> getHddList() {
         return hddList;
+    }
+    public List<Case> getCaseList() {
+        return caseList;
     }
     public List<Drive> getDriveList() {
         return driveList;
