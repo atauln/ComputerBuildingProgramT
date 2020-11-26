@@ -18,6 +18,7 @@ public class Variables {
     List<HDD> hddList = new ArrayList<>();
     List<Drive> driveList = new ArrayList<>();
     List<Case> caseList = new ArrayList<>();
+    List<PowerSupply> powerSupplyList = new ArrayList<>();
 
     public void initLists() {
         //INTEL CPUS
@@ -80,6 +81,13 @@ public class Variables {
         //Cases
         caseList.add(new Case("H510", "NZXT", "Tempered Glass", "ATX", 0, 1, 1, 70));
         caseList.add(new Case("275R Airflow", "Corsair", "Tempered Glass", "ATX", 0, 2, 0, 80));
+
+        //Power Supplies
+        powerSupplyList.add(new PowerSupply("EVGA BA", "Non-Modular", "80+ BRONZE", new int[]{450, 500, 550, 600, 650, 700, 750, 850}));
+        powerSupplyList.add(new PowerSupply("Seasonic S12III", "Non-Modular", "80+ BRONZE", new int[]{500, 550, 650}));
+        powerSupplyList.add(new PowerSupply("Corsair RMx Series", "Full Modular", "80+ GOLD", new int[]{550, 650, 750, 850, 1000}));
+        powerSupplyList.add(new PowerSupply("Gigabyte P450B", "Non-Modular", "80+ BRONZE", new int[]{450, 550, 650}));
+        powerSupplyList.add(new PowerSupply("Gigabyte P750GM", "Full Modular", "80+ GOLD", new int[]{750, 850}));
     }
     public List<CPU> getAmdCPUList() {
         return amdCPUList;
@@ -119,5 +127,8 @@ public class Variables {
     }
     public List<Drive> getDriveList() {
         return driveList;
+    }
+    public List<PowerSupply> getPowerSupplyList() {
+        return powerSupplyList;
     }
 }

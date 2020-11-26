@@ -19,6 +19,7 @@ public class Main {
     List<SSD> ssdList = new ArrayList<>();
     List<HDD> hddList = new ArrayList<>();
     List<Case> caseList = new ArrayList<>();
+    List<PowerSupply> powerSupplyList = new ArrayList<>();
     CPU currentCPU;
 
     //Main class
@@ -35,6 +36,7 @@ public class Main {
         main.setHddList(var.getHddList());
         main.setDriveList(var.getDriveList());
         main.setCaseList(var.getCaseList());
+        main.setPowerSupplyList(var.getPowerSupplyList());
         while (true) {
             var.setDay(var.getDay() + 1);
             main.day(var.getDay());
@@ -54,7 +56,7 @@ public class Main {
                 sysOut("----------");
                 sysOut("Commands currently available: ");
                 sysOut("startbuild - start building your pc");
-                sysOut("stopbuild - remove current pc");
+                sysOut("balance - check your balance");
                 sysOut("shop [type] [brand] - look at the current catalog of items");
                 sysOut("details [type] [brand] [#] - get details for an item");
                 sysOut("----------");
@@ -112,12 +114,16 @@ public class Main {
                         for (Case chosenCase : caseList) {
                             sysOut(caseList.indexOf(chosenCase) + 1 + ". " + chosenCase.getName() + " (" + chosenCase.getManufacturer() + " | $" + chosenCase.getPrice() + ")");
                         }
+                    } else if (command.get(1).equals("psu")) {
+                        for (PowerSupply psu : powerSupplyList) {
+                            sysOut(powerSupplyList.indexOf(psu) + 1 + ". " + psu.getName() + " (" + psu.getType() + " | " + psu.getRating() + ")");
+                        }
                     } else {
                         sysOut("Second arg was invalid!");
                     }
                 } catch (Exception e) {
                     if (e instanceof IndexOutOfBoundsException) {
-                        sysOut("----------\nTypes:\ncpu\nmotherboard\ngpu\ndrive\n----------");
+                        sysOut("----------\nTypes:\ncpu\nmotherboard\ngpu\ndrive\ncase\npsu\n----------");
                     }
                 }
             } else if (command.get(0).equals("details") || command.get(0).equals("]details")) {
@@ -226,7 +232,28 @@ public class Main {
                         }
                     } else if (command.get(1).equals("case")) {
                         try {
-                            Case chosenCase = caseList.get(Integer.parseInt(command.get(2)));
+                            Case chosenCase = caseList.get(Integer.parseInt(command.get(2)) - 1);
+                            sysOut("----------\nCase Details: " +
+                                    "\nName: " + chosenCase.getName() +
+                                    "\nManufacturer: " + chosenCase.getManufacturer() +
+                                    "\nSide panel: " + chosenCase.getSidePanel() +
+                                    "\nType: " + chosenCase.getType() +
+                                    "\nUSB ports: (" + chosenCase.getUsb2Ports() + " USB-2 ports, " + chosenCase.getUsb3Ports() + " USB-3 ports, " + chosenCase.getUsbCPorts() + " USB-C ports)" +
+                                    "\nPrice: $" + chosenCase.getPrice());
+                        } catch (Exception e) {
+                            sysOut("Please use a valid integer!");
+                        }
+                    } else if (command.get(1).equals("psu")) {
+                        try {
+                            PowerSupply psu = powerSupplyList.get(Integer.parseInt(command.get(2)) - 1);
+                            sysOut("----------\nPSU Details: " +
+                                    "\nName: " + psu.getName() +
+                                    "\nRating: " + psu.getRating() +
+                                    "\nType: " + psu.getType() +
+                                    "\nWattages: ");
+                            for (int wattage : psu.getWatts()) {
+                                sysOut(" - " + wattage + "W");
+                            }
                         } catch (Exception e) {
                             sysOut("Please use a valid integer!");
                         }
@@ -510,6 +537,53 @@ public class Main {
             }
         }
         //endregion
+        //region PSU
+        int buildWatts = 0;
+        PowerSupply chosenPSU = null;
+        List<PowerSupply> powerSupplies = new ArrayList<>();
+        for (PowerSupply psu : powerSupplyList) {
+            if (psu.hasAbovePower(buildWatts)) {
+                powerSupplies.add(psu);
+            }
+        }
+        while (pcPartsList.size() != 7) {
+            sysOut("**********\nSelect your power supply: ");
+            for (PowerSupply psu : powerSupplies) {
+                sysOut(powerSupplies.indexOf(psu) + 1 + ". " + psu.getName() + " (" + psu.getType() + " | " + psu.getRating() + ")");
+            }
+            sysOut("**********");
+            String userCommand = scan.nextLine();
+            if (userCommand.equals("stop") || userCommand.equals("end")) {
+                return emptyList;
+            }
+            try {
+                chosenPSU = powerSupplies.get(Integer.parseInt(userCommand) - 1);
+            } catch (Exception e) {
+                sysOut(e.toString());
+            }
+            List<Integer> chosenWattsList = new ArrayList<>();
+            for (int watts : chosenPSU.getWatts()) {
+                if (buildWatts <= watts) {
+                    chosenWattsList.add(watts);
+                }
+            }
+            sysOut("**********\nChoose the amount of watts: ");
+            for (int watts : chosenWattsList) {
+                sysOut(chosenWattsList.indexOf(watts) + 1 + ". " + watts + " ($INSERT PRICES)");
+            }
+            sysOut("**********");
+            userCommand = scan.nextLine();
+            if (userCommand.equals("stop") || userCommand.equals("end")) {
+                return emptyList;
+            }
+            try {
+                chosenPSU.setChosenWatts(chosenWattsList.get(Integer.parseInt(userCommand) - 1));
+                pcPartsList.add(chosenPSU);
+            } catch (Exception e) {
+                sysOut("Caught an error!");
+            }
+        }
+        //endregion
         //region PC Details
         sysOut("**********\nPC Details: " +
                 "\nCase: " + ((Case) pcPartsList.get(5)).getName() +
@@ -517,7 +591,8 @@ public class Main {
                 "\nMotherboard: " + ((Motherboard) pcPartsList.get(1)).getName() +
                 "\nRAM: " + ((RAM[]) pcPartsList.get(2)).length + "x" + (((RAM[]) pcPartsList.get(2))[0]).getCapacity() + "GB " + (((RAM[]) pcPartsList.get(2))[0]).getType() + "-" + (((RAM[]) pcPartsList.get(2))[0]).getSpeed() +
                 "\nGPU(s): " + ((GPU[]) pcPartsList.get(3))[0].getName() + " (" + ((GPU[]) pcPartsList.get(3)).length + ")" +
-                "\nDrives:");
+                "\nPower Supply: " + ((PowerSupply) pcPartsList.get(6)).getName() + " (" + ((PowerSupply) pcPartsList.get(6)).getType() + " | " + ((PowerSupply) pcPartsList.get(6)).getRating() + " | " + ((PowerSupply) pcPartsList.get(6)).getChosenWatts() + "W)" +
+                "\nDrives: ");
         for (Drive drive : ((List<Drive>) pcPartsList.get(4))) {
             if (drive instanceof SSD) {
                 if (((SSD) drive).getInterf().equals("NVMe")) {
@@ -623,5 +698,8 @@ public class Main {
         }
     }
     public void setCaseList(List<Case> caseList) {this.caseList = caseList;}
-    //endregion
+    public void setPowerSupplyList(List<PowerSupply> powerSupplyList) {
+        this.powerSupplyList = powerSupplyList;
+    }
+//endregion
 }

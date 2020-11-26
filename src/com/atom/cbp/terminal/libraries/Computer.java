@@ -1,10 +1,6 @@
 package com.atom.cbp.terminal.libraries;
-
 import com.atom.cbp.terminal.libraries.Drives.Drive;
-
-import java.util.ArrayList;
 import java.util.List;
-
 public class Computer {
     RAM[] rams;
     CPU cpu;
@@ -12,15 +8,16 @@ public class Computer {
     GPU[] gpus;
     List<Drive> driveList;
     Case chosenCase;
-    public Computer(CPU cpu, Motherboard mobo, RAM[] rams, GPU[] gpus, List<Drive> driveList, Case chosenCase) {
+    PowerSupply powerSupply;
+    public Computer(CPU cpu, Motherboard mobo, RAM[] rams, GPU[] gpus, List<Drive> driveList, Case chosenCase, PowerSupply powerSupply) {
         this.rams = rams;
         this.mobo = mobo;
         this.cpu = cpu;
         this.gpus = gpus;
         this.driveList = driveList;
         this.chosenCase = chosenCase;
+        this.powerSupply = powerSupply;
     }
-
     public RAM[] getRams() {
         return rams;
     }
@@ -41,6 +38,12 @@ public class Computer {
     }
     public GPU[] getGpus() {
         return gpus;
+    }
+    public PowerSupply getPowerSupply() {
+        return powerSupply;
+    }
+    public void setPowerSupply(PowerSupply powerSupply) {
+        this.powerSupply = powerSupply;
     }
     public void setGpus(GPU[] gpus) {
         this.gpus = gpus;
