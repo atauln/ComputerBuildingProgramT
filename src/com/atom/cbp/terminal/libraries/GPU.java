@@ -44,4 +44,7 @@ public class GPU {
     public int getBoostClock() {
         return boostClock;
     }
+    public int getTdp() {
+        return tdp;
+    }
 }

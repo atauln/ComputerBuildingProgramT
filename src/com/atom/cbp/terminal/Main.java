@@ -57,6 +57,7 @@ public class Main {
                 sysOut("Commands currently available: ");
                 sysOut("startbuild - start building your pc");
                 sysOut("balance - check your balance");
+                sysOut("list - list your pcs");
                 sysOut("shop [type] [brand] - look at the current catalog of items");
                 sysOut("details [type] [brand] [#] - get details for an item");
                 sysOut("----------");
@@ -266,14 +267,19 @@ public class Main {
                     }
                 }
             } else if (command.get(0).equals("startbuild") || command.get(0).equals("]startbuild")) {
-                List<Object> obj = pcBuild();
+                Object builtPC = pcBuild();
+                if (builtPC instanceof Computer) {
+                    var.computerList.add((Computer) builtPC);
+                }
+            } else if (command.get(0).equals("list")) {
+                var.listPCs();
             } else {
                 sysOut("First arg was invalid!");
             }
         }
     }
 
-    public List<Object> pcBuild() {
+    public Object pcBuild() {
         List<Object> emptyList = new ArrayList<>();
         List<Object> pcPartsList = new ArrayList<>();
         //region CPU
@@ -368,9 +374,9 @@ public class Main {
                 return emptyList;
             }
             try {
-                RAM[] rams = new RAM[ramConfig.get(Integer.parseInt(userCommand)).toCharArray()[0]];
-                for (int i = 1; i <= (ramConfig.get(Integer.parseInt(userCommand)).toCharArray()[0]); i++) {
-                    rams[i - 1] = new RAM(ramSpeedChoice.substring(0, 4), Integer.parseInt(ramSpeedChoice.substring(ramSpeedChoice.length() - (ramSpeedChoice.length() - 5))), Integer.parseInt(ramConfig.get(Integer.parseInt(userCommand)).substring(ramConfig.get(Integer.parseInt(userCommand)).length() - (ramConfig.get(Integer.parseInt(userCommand)).length() - 2))));
+                RAM[] rams = new RAM[Character.getNumericValue(ramConfig.get(Integer.parseInt(userCommand)).charAt(0))];
+                for (int i = 0; i < (rams.length); i++) {
+                    rams[i] = new RAM(ramSpeedChoice.substring(0, 4), Integer.parseInt(ramSpeedChoice.substring(ramSpeedChoice.length() - (ramSpeedChoice.length() - 5))), Integer.parseInt(ramConfig.get(Integer.parseInt(userCommand)).substring(ramConfig.get(Integer.parseInt(userCommand)).length() - (ramConfig.get(Integer.parseInt(userCommand)).length() - 2))));
                 }
                 pcPartsList.add(rams);
             } catch (Exception e) {
@@ -538,7 +544,7 @@ public class Main {
         }
         //endregion
         //region PSU
-        int buildWatts = 0;
+        int buildWatts = getWattage(pcPartsList);
         PowerSupply chosenPSU = null;
         List<PowerSupply> powerSupplies = new ArrayList<>();
         for (PowerSupply psu : powerSupplyList) {
@@ -584,29 +590,9 @@ public class Main {
             }
         }
         //endregion
-        //region PC Details
-        sysOut("**********\nPC Details: " +
-                "\nCase: " + ((Case) pcPartsList.get(5)).getName() +
-                "\nCPU: " + ((CPU) pcPartsList.get(0)).getName() +
-                "\nMotherboard: " + ((Motherboard) pcPartsList.get(1)).getName() +
-                "\nRAM: " + ((RAM[]) pcPartsList.get(2)).length + "x" + (((RAM[]) pcPartsList.get(2))[0]).getCapacity() + "GB " + (((RAM[]) pcPartsList.get(2))[0]).getType() + "-" + (((RAM[]) pcPartsList.get(2))[0]).getSpeed() +
-                "\nGPU(s): " + ((GPU[]) pcPartsList.get(3))[0].getName() + " (" + ((GPU[]) pcPartsList.get(3)).length + ")" +
-                "\nPower Supply: " + ((PowerSupply) pcPartsList.get(6)).getName() + " (" + ((PowerSupply) pcPartsList.get(6)).getType() + " | " + ((PowerSupply) pcPartsList.get(6)).getRating() + " | " + ((PowerSupply) pcPartsList.get(6)).getChosenWatts() + "W)" +
-                "\nDrives: ");
-        for (Drive drive : ((List<Drive>) pcPartsList.get(4))) {
-            if (drive instanceof SSD) {
-                if (((SSD) drive).getInterf().equals("NVMe")) {
-                    sysOut(" - " + drive.getName() + " [NVMe | SSD | " + drive.getChosenCapacity() + "GB] ($" + calculatePriceDrive(drive) + ")");
-                } else {
-                    sysOut(" - " + drive.getName() + " [SATA | SSD | " + drive.getChosenCapacity() + "GB] ($" + calculatePriceDrive(drive) + ")");
-                }
-            } else {
-                sysOut(" - " + drive.getName() + " [SATA | HDD | " + drive.getChosenCapacity() + "GB] ($" + calculatePriceDrive(drive) + ")");
-            }
-        }
-        sysOut("**********");
-        //endregion
-        return pcPartsList;
+        Computer builtComputer = new Computer((CPU) pcPartsList.get(0), (Motherboard) pcPartsList.get(1), (RAM[]) pcPartsList.get(2), (GPU[]) pcPartsList.get(3), (List<Drive>) pcPartsList.get(4), (Case) pcPartsList.get(5), (PowerSupply) pcPartsList.get(6));
+        builtComputer.sysOutput();
+        return builtComputer;
     }
     //region Mini-methods
     public void setIntelCPUList(List<CPU> intelCPUList) {
@@ -701,5 +687,8 @@ public class Main {
     public void setPowerSupplyList(List<PowerSupply> powerSupplyList) {
         this.powerSupplyList = powerSupplyList;
     }
-//endregion
+    public int getWattage(List<Object> pcParts) {
+        return ((CPU) pcParts.get(0)).getTDP() + ((GPU[]) pcParts.get(3))[0].getTdp() + 75 + ((RAM[]) pcParts.get(2)).length*((RAM[]) pcParts.get(2))[0].getCapacity() + ((List<Drive>) pcParts.get(4)).size()*15;
+    }
+    //endregion
 }

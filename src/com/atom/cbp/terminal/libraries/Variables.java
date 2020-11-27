@@ -19,6 +19,7 @@ public class Variables {
     List<Drive> driveList = new ArrayList<>();
     List<Case> caseList = new ArrayList<>();
     List<PowerSupply> powerSupplyList = new ArrayList<>();
+    public List<Computer> computerList = new ArrayList<>();
 
     public void initLists() {
         //INTEL CPUS
@@ -130,5 +131,12 @@ public class Variables {
     }
     public List<PowerSupply> getPowerSupplyList() {
         return powerSupplyList;
+    }
+    public void listPCs() {
+        System.out.println("**********\nYour PCs:");
+        for (Computer computer : computerList) {
+            System.out.println(computerList.indexOf(computer) + 1 + ". " + computer.getCpu().getName() + " | " + computer.getMobo().getName() + " | " + computer.getGpus()[0].getName() + " (" + computer.getGpus().length + ") | " + computer.getRams().length + "x" + computer.getRams()[0].getCapacity() + "GB " + computer.getRams()[0].getType() + "-" + computer.getRams()[0].getSpeed());
+        }
+        System.out.println("**********");
     }
 }

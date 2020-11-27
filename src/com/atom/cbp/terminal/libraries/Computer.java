@@ -1,7 +1,12 @@
 package com.atom.cbp.terminal.libraries;
+import com.atom.cbp.terminal.Main;
 import com.atom.cbp.terminal.libraries.Drives.Drive;
+import com.atom.cbp.terminal.libraries.Drives.SSD;
+
 import java.util.List;
 public class Computer {
+    Main m = new Main();
+
     RAM[] rams;
     CPU cpu;
     Motherboard mobo;
@@ -59,5 +64,31 @@ public class Computer {
     }
     public void setChosenCase(Case chosenCase) {
         this.chosenCase = chosenCase;
+    }
+    public int getWatts() {
+        return cpu.getTDP() + gpus[0].getTdp() + 75 + rams.length*rams[0].getCapacity() + driveList.size()*15;
+    }
+    public void sysOutput() {
+        System.out.println("**********\nPC Details: " +
+                "\nCase: " + chosenCase.getName() +
+                "\nCPU: " + cpu.getName() +
+                "\nMotherboard: " + mobo.getName() +
+                "\nRAM: " + rams.length + "x" + rams[0].getCapacity() + "GB " + rams[0].getType() + "-" + rams[0].getSpeed() +
+                "\nGPU(s): " + gpus[0].getName() + " (" + gpus.length + ")" +
+                "\nPower Supply: " + powerSupply.getName() + " (" + powerSupply.getType() + " | " + powerSupply.getRating() + " | " + powerSupply.getChosenWatts() + "W)" +
+                "\nDrives: ");
+        for (Drive drive : driveList) {
+            if (drive instanceof SSD) {
+                if (((SSD) drive).getInterf().equals("NVMe")) {
+                    System.out.println(" - " + drive.getName() + " [NVMe | SSD | " + drive.getChosenCapacity() + "GB] ($" + m.calculatePriceDrive(drive) + ")");
+                } else {
+                    System.out.println(" - " + drive.getName() + " [SATA | SSD | " + drive.getChosenCapacity() + "GB] ($" + m.calculatePriceDrive(drive) + ")");
+                }
+            } else {
+                System.out.println(" - " + drive.getName() + " [SATA | HDD | " + drive.getChosenCapacity() + "GB] ($" + m.calculatePriceDrive(drive) + ")");
+            }
+        }
+        System.out.println("Watts: " + getWatts());
+        System.out.println("**********");
     }
 }
