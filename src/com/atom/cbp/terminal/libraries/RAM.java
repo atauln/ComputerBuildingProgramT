@@ -21,4 +21,7 @@ public class RAM {
     public String getType() {
         return type;
     }
+    public double getPrice() {
+        return Math.round(0.0025 * Math.pow(speed, 1.01));
+    }
 }

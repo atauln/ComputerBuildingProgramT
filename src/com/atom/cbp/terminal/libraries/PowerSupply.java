@@ -1,7 +1,5 @@
 package com.atom.cbp.terminal.libraries;
-import java.util.List;
 public class PowerSupply {
-    int price;
     int[] watts;
     int chosenWatts;
     String rating, name, type;
@@ -11,8 +9,61 @@ public class PowerSupply {
         this.rating = rating;
         this.watts = watts;
     }
-    public int getPrice() {
-        return price;
+    public double getPrice() {
+        double modifier;
+        switch (rating) {
+            case "80+ BRONZE": {
+                modifier = 1.1;
+                break;
+            }
+            case "80+ SILVER": {
+                modifier = 1.25;
+                break;
+            }
+            case "80+ GOLD": {
+                modifier = 1.5;
+                break;
+            }
+            case "80+ PLATINUM": {
+                modifier = 1.8;
+                break;
+            }
+            case "80+ TITANIUM": {
+                modifier = 2.3;
+                break;
+            }
+            default:
+                throw new IllegalStateException("Unexpected value: " + rating);
+        }
+        return (Math.pow((0.7*modifier), modifier)*chosenWatts)/10;
+    }
+    public double getPrice(int amount) {
+        double modifier;
+        switch (rating) {
+            case "80+ BRONZE": {
+                modifier = 1.1;
+                break;
+            }
+            case "80+ SILVER": {
+                modifier = 1.25;
+                break;
+            }
+            case "80+ GOLD": {
+                modifier = 1.5;
+                break;
+            }
+            case "80+ PLATINUM": {
+                modifier = 1.8;
+                break;
+            }
+            case "80+ TITANIUM": {
+                modifier = 2.3;
+                break;
+            }
+            default:
+                throw new IllegalStateException("Unexpected value: " + rating);
+        }
+        return (Math.pow((0.7*modifier), modifier)*amount)/10;
     }
     public int[] getWatts() {
         return watts;

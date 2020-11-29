@@ -6,7 +6,7 @@ import com.atom.cbp.terminal.libraries.Drives.SSD;
 import java.util.List;
 public class Computer {
     Main m = new Main();
-
+    int dayMade;
     RAM[] rams;
     CPU cpu;
     Motherboard mobo;
@@ -14,7 +14,7 @@ public class Computer {
     List<Drive> driveList;
     Case chosenCase;
     PowerSupply powerSupply;
-    public Computer(CPU cpu, Motherboard mobo, RAM[] rams, GPU[] gpus, List<Drive> driveList, Case chosenCase, PowerSupply powerSupply) {
+    public Computer(int dayMade, CPU cpu, Motherboard mobo, RAM[] rams, GPU[] gpus, List<Drive> driveList, Case chosenCase, PowerSupply powerSupply) {
         this.rams = rams;
         this.mobo = mobo;
         this.cpu = cpu;
@@ -22,6 +22,7 @@ public class Computer {
         this.driveList = driveList;
         this.chosenCase = chosenCase;
         this.powerSupply = powerSupply;
+        this.dayMade = dayMade;
     }
     public RAM[] getRams() {
         return rams;
@@ -89,6 +90,14 @@ public class Computer {
             }
         }
         System.out.println("Watts: " + getWatts());
+        System.out.println("Price: $" + getPrice());
         System.out.println("**********");
+    }
+    public double getPrice() {
+        double drivePrices = 0;
+        for (Drive drive : driveList) {
+            drivePrices += m.calculatePriceDrive(drive);
+        }
+        return Math.round(cpu.getPrice() + mobo.getPrice() + gpus.length*gpus[0].getPrice() + rams.length*rams[0].getPrice() + drivePrices + chosenCase.getPrice() + powerSupply.getPrice());
     }
 }

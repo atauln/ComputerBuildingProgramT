@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Variables {
     public int day = 0;
-    public int bal = 500;
+    public double bal = 1000;
     public List<CPU> CPUList = new ArrayList<>();
     public List<CPU> intelCPUList = new ArrayList<>();
     public List<CPU> amdCPUList = new ArrayList<>();
@@ -58,7 +58,8 @@ public class Variables {
 
 
         //GPUs
-        gpuList.add(new GPU("NVIDIA Geforce RTX 3080", "Q3' 2020", "GDDR6X", 10, 8704, 1440, 1710, 600, 320));
+        gpuList.add(new GPU("NVIDIA GeForce RTX 3080", "Q3' 2020", "GDDR6X", 10, 8704, 1440, 1710, 600, 320));
+        gpuList.add(new GPU("NVIDIA GeForce GT 1030", "Q2' 2017", "GDDR5", 2, 384, 1290, 1544, 90, 30));
 
 
         //SSDs
@@ -96,10 +97,10 @@ public class Variables {
     public List<CPU> getIntelCPUList() {
         return intelCPUList;
     }
-    public void setBal(int value) {
+    public void setBal(double value) {
         bal = value;
     }
-    public int getBal() {
+    public double getBal() {
         return bal;
     }
     public void setDay(int value) {
@@ -135,8 +136,14 @@ public class Variables {
     public void listPCs() {
         System.out.println("**********\nYour PCs:");
         for (Computer computer : computerList) {
-            System.out.println(computerList.indexOf(computer) + 1 + ". " + computer.getCpu().getName() + " | " + computer.getMobo().getName() + " | " + computer.getGpus()[0].getName() + " (" + computer.getGpus().length + ") | " + computer.getRams().length + "x" + computer.getRams()[0].getCapacity() + "GB " + computer.getRams()[0].getType() + "-" + computer.getRams()[0].getSpeed());
+            System.out.println(computerList.indexOf(computer) + 1 + ". Day " + computer.dayMade + " | " + computer.getCpu().getName() + " | " + computer.getMobo().getName() + " | " + computer.getGpus()[0].getName() + " (" + computer.getGpus().length + ") | " + computer.getRams().length + "x" + computer.getRams()[0].getCapacity() + "GB " + computer.getRams()[0].getType() + "-" + computer.getRams()[0].getSpeed());
         }
         System.out.println("**********");
+    }
+    public List<Computer> getComputerList() {
+        return computerList;
+    }
+    public void nextDay() {
+        day++;
     }
 }
