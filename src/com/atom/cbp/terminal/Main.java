@@ -19,6 +19,7 @@ public class Main {
     List<SSD> ssdList = new ArrayList<>();
     List<HDD> hddList = new ArrayList<>();
     List<Case> caseList = new ArrayList<>();
+    List<PowerSupply> powerSupplyList = new ArrayList<>();
     CPU currentCPU;
 
     //Main class
@@ -35,8 +36,9 @@ public class Main {
         main.setHddList(var.getHddList());
         main.setDriveList(var.getDriveList());
         main.setCaseList(var.getCaseList());
+        main.setPowerSupplyList(var.getPowerSupplyList());
         while (true) {
-            var.setDay(var.getDay() + 1);
+            var.nextDay();
             main.day(var.getDay());
         }
     }
@@ -54,7 +56,8 @@ public class Main {
                 sysOut("----------");
                 sysOut("Commands currently available: ");
                 sysOut("startbuild - start building your pc");
-                sysOut("stopbuild - remove current pc");
+                sysOut("balance - check your balance");
+                sysOut("list - list your pcs");
                 sysOut("shop [type] [brand] - look at the current catalog of items");
                 sysOut("details [type] [brand] [#] - get details for an item");
                 sysOut("----------");
@@ -62,176 +65,217 @@ public class Main {
                 sysOut("----------\nBalance: " + var.getBal() + "\n----------");
             } else if (command.get(0).equals("shop") || command.get(0).equals("]shop")) {
                 try {
-                    if (command.get(1).equals("cpu")) {
-                        sysOut("----------\nCPUs:");
-                        try {
-                            if (command.get(2).equals("intel")) {
-                                for (CPU cpu : intelCPUList) {
-                                    sysOut(intelCPUList.indexOf(cpu) + 1 + ". " + cpu.getName() + " ($" + cpu.getPrice() + ")");
+                    switch (command.get(1)) {
+                        case "cpu":
+                            sysOut("----------\nCPUs:");
+                            try {
+                                if (command.get(2).equals("intel")) {
+                                    for (CPU cpu : intelCPUList) {
+                                        sysOut(intelCPUList.indexOf(cpu) + 1 + ". " + cpu.getName() + " ($" + cpu.getPrice() + ")");
+                                    }
+                                } else if (command.get(2).equals("amd")) {
+                                    for (CPU cpu : AMDCPUList) {
+                                        sysOut(AMDCPUList.indexOf(cpu) + 1 + ". " + cpu.getName() + " ($" + cpu.getPrice() + ")");
+                                    }
+                                } else {
+                                    sysOut("Third arg was invalid!");
                                 }
-                            } else if (command.get(2).equals("amd")) {
-                                for (CPU cpu : AMDCPUList) {
-                                    sysOut(AMDCPUList.indexOf(cpu) + 1 + ". " + cpu.getName() + " ($" + cpu.getPrice() + ")");
-                                }
-                            } else {
-                                sysOut("Third arg was invalid!");
-                            }
-                        } catch (Exception e) {
-                            if (e instanceof IndexOutOfBoundsException) {
-                                sysOut("-----------\nBrands:\nintel\namd\n----------");
-                            }
-                        }
-                        sysOut("----------");
-                    } else if (command.get(1).equals("motherboard")) {
-                        sysOut("----------\nMotherboards:");
-                        for (Motherboard motherboard : motherboardList) {
-                            sysOut(motherboardList.indexOf(motherboard) + 1 + ". " + motherboard.getName() + " ($" + motherboard.getPrice() + ")");
-                        }
-                        sysOut("----------");
-                    } else if (command.get(1).equals("gpu")) {
-                        sysOut("----------\nGPUs:");
-                        for (GPU gpu : gpuList) {
-                            sysOut(gpuList.indexOf(gpu) + 1 + ". " + gpu.getName() + " ($" + gpu.getPrice() + ")");
-                        }
-                        sysOut("----------");
-                    } else if (command.get(1).equals("drive")) {
-                        try {
-                            if (command.get(2).equals("ssd")) {
-                                for (SSD ssd : ssdList) {
-                                    sysOut(ssdList.indexOf(ssd) + 1 + ". " + ssd.getName() + " [" + ssd.getInterf() + " | SSD]");
-                                }
-                            } else if (command.get(2).equals("hdd")) {
-                                for (HDD hdd : hddList) {
-                                    sysOut(hddList.indexOf(hdd) + 1 + ". " + hdd.getName() + " [SATA | HDD]");
+                            } catch (Exception e) {
+                                if (e instanceof IndexOutOfBoundsException) {
+                                    sysOut("-----------\nBrands:\nintel\namd\n----------");
                                 }
                             }
-                        } catch (Exception e) {
-                            sysOut("Options: ssd, hdd");
-                        }
-                    } else if (command.get(1).equals("case")) {
-                        for (Case chosenCase : caseList) {
-                            sysOut(caseList.indexOf(chosenCase) + 1 + ". " + chosenCase.getName() + " (" + chosenCase.getManufacturer() + " | $" + chosenCase.getPrice() + ")");
-                        }
-                    } else {
-                        sysOut("Second arg was invalid!");
+                            sysOut("----------");
+                            break;
+                        case "motherboard":
+                            sysOut("----------\nMotherboards:");
+                            for (Motherboard motherboard : motherboardList) {
+                                sysOut(motherboardList.indexOf(motherboard) + 1 + ". " + motherboard.getName() + " ($" + motherboard.getPrice() + ")");
+                            }
+                            sysOut("----------");
+                            break;
+                        case "gpu":
+                            sysOut("----------\nGPUs:");
+                            for (GPU gpu : gpuList) {
+                                sysOut(gpuList.indexOf(gpu) + 1 + ". " + gpu.getName() + " ($" + gpu.getPrice() + ")");
+                            }
+                            sysOut("----------");
+                            break;
+                        case "drive":
+                            try {
+                                if (command.get(2).equals("ssd")) {
+                                    for (SSD ssd : ssdList) {
+                                        sysOut(ssdList.indexOf(ssd) + 1 + ". " + ssd.getName() + " [" + ssd.getInterf() + " | SSD]");
+                                    }
+                                } else if (command.get(2).equals("hdd")) {
+                                    for (HDD hdd : hddList) {
+                                        sysOut(hddList.indexOf(hdd) + 1 + ". " + hdd.getName() + " [SATA | HDD]");
+                                    }
+                                }
+                            } catch (Exception e) {
+                                sysOut("Options: ssd, hdd");
+                            }
+                            break;
+                        case "case":
+                            for (Case chosenCase : caseList) {
+                                sysOut(caseList.indexOf(chosenCase) + 1 + ". " + chosenCase.getName() + " (" + chosenCase.getManufacturer() + " | $" + chosenCase.getPrice() + ")");
+                            }
+                            break;
+                        case "psu":
+                            for (PowerSupply psu : powerSupplyList) {
+                                sysOut(powerSupplyList.indexOf(psu) + 1 + ". " + psu.getName() + " (" + psu.getType() + " | " + psu.getRating() + ")");
+                            }
+                            break;
+                        default:
+                            sysOut("Second arg was invalid!");
+                            break;
                     }
                 } catch (Exception e) {
                     if (e instanceof IndexOutOfBoundsException) {
-                        sysOut("----------\nTypes:\ncpu\nmotherboard\ngpu\ndrive\n----------");
+                        sysOut("----------\nTypes:\ncpu\nmotherboard\ngpu\ndrive\ncase\npsu\n----------");
                     }
                 }
             } else if (command.get(0).equals("details") || command.get(0).equals("]details")) {
                 try {
-                    if (command.get(1).equals("cpu")) {
-                        try {
-                            if (command.get(2).equals("intel")) {
-                                try {
-                                    currentCPU = intelCPUList.get(Integer.parseInt(command.get(3)) - 1);
-                                    getCPUdetails(currentCPU);
-                                } catch (Exception e) {
-                                    if (e instanceof IndexOutOfBoundsException) {
-                                        sysOut("Please use a number for the details of an item!");
+                    switch (command.get(1)) {
+                        case "cpu":
+                            try {
+                                if (command.get(2).equals("intel")) {
+                                    try {
+                                        currentCPU = intelCPUList.get(Integer.parseInt(command.get(3)) - 1);
+                                        getCPUdetails(currentCPU);
+                                    } catch (Exception e) {
+                                        if (e instanceof IndexOutOfBoundsException) {
+                                            sysOut("Please use a number for the details of an item!");
+                                        }
                                     }
+                                } else if (command.get(2).equals("amd")) {
+                                    try {
+                                        currentCPU = AMDCPUList.get(Integer.parseInt(command.get(3)) - 1);
+                                        getCPUdetails(currentCPU);
+                                    } catch (Exception e) {
+                                        if (e instanceof IndexOutOfBoundsException) {
+                                            sysOut("Please use a number for the details of an item!");
+                                        }
+                                    }
+                                } else {
+                                    sysOut("Third arg was invalid!");
                                 }
-                            } else if (command.get(2).equals("amd")) {
-                                try {
-                                    currentCPU = AMDCPUList.get(Integer.parseInt(command.get(3)) - 1);
-                                    getCPUdetails(currentCPU);
-                                } catch (Exception e) {
-                                    if (e instanceof IndexOutOfBoundsException) {
-                                        sysOut("Please use a number for the details of an item!");
-                                    }
-                                }
-                            } else {
-                                sysOut("Third arg was invalid!");
-                            }
-                        } catch (Exception e) {
-                            if (e instanceof IndexOutOfBoundsException) {
-                                sysOut("----------\nBrands:\nintel\namd\n----------");
-                            }
-                        }
-                    } else if (command.get(1).equals("motherboard")) {
-                        try {
-                            Motherboard motherboard = motherboardList.get(Integer.parseInt(command.get(2)) - 1);
-                            sysOut("----------" +
-                                    "\nMotherboard details: " +
-                                    "\nName: " + motherboard.getName() +
-                                    "\nSocket: " + motherboard.getSocket() +
-                                    "\nSize: " + motherboard.getSize() +
-                                    "\nUSB Ports: " + motherboard.getUsb2Ports() + " USB-2 ports, " + motherboard.getUsb3Ports() + " USB-3 ports, " + motherboard.getUsbCPorts() + " USB-C ports" +
-                                    "\nOutputs: " + motherboard.getNumOutputs() +
-                                    "\nPCIe Slots: " + motherboard.getPcieSlots() +
-                                    "\nRAM Slots: " + motherboard.getRamSlots() + " (with " + motherboard.getMaxMemory() + " gb of maximum memory)" +
-                                    "\nNVME Slots: " + motherboard.getNvmeSlots() +
-                                    "\nSATA Ports: " + motherboard.getSataSlots() +
-                                    "\nIntegrated WiFi: " + motherboard.isIntWiFi() +
-                                    "\nIntegrated Bluetooth: " + motherboard.isIntBT() +
-                                    "\nPrice: $" + motherboard.getPrice() +
-                                    "\n----------");
-                        } catch (Exception e) {
-                            if (e instanceof IndexOutOfBoundsException) {
-                                sysOut("Please use a number for the details of the item!");
-                            }
-                        }
-                    } else if (command.get(1).equals("gpu")) {
-                        try {
-                            GPU gpu = gpuList.get(Integer.parseInt(command.get(2)) - 1);
-                            sysOut("----------" +
-                                    "\nGPU Details:" +
-                                    "\nName: " + gpu.getName() +
-                                    "\nRelease Date: " + gpu.getReleaseDate() +
-                                    "\nCore clock: " + gpu.getBaseClock() + " MHz (Boost Clock: " + gpu.getBoostClock() + " MHz)" +
-                                    "\nMemory: " + gpu.getMemorySize() + "GB " + gpu.getMemoryType() +
-                                    "\nCores: " + gpu.getCores() +
-                                    "\nPrice: $" + gpu.getPrice() +
-                                    "\n----------");
-                        } catch (Exception e) {
-                            if (e instanceof IndexOutOfBoundsException) {
-                                sysOut("Please use a number for the details of the item!");
-                            }
-                        }
-                    } else if (command.get(1).equals("drive")) {
-                        try {
-                            if (command.get(2).equals("ssd")) {
-                                try {
-                                    SSD ssd = ssdList.get(Integer.parseInt(command.get(3)) - 1);
-                                    sysOut("---------\nSSD:" +
-                                            "\nName: " + ssd.getName() +
-                                            "\nInterface: " + ssd.getInterf() +
-                                            "\nRead Speeds: " + ssd.getReadSpeed() +
-                                            "\nWrite Speeds: " + ssd.getWriteSpeed() +
-                                            "\nCapacities: ");
-                                    for (int cap : ssd.getCapacities()) {
-                                        sysOut(" - " + cap + "GB ($" + calculatePriceDrive(ssd, cap) + ")");
-                                    }
-                                } catch (Exception e) {
-                                    sysOut("Please use a valid integer!");
-                                }
-                            } else if (command.get(2).equals("hdd")) {
-                                try {
-                                    HDD hdd = hddList.get(Integer.parseInt(command.get(3)) - 1);
-                                    sysOut("----------\nHDD:" +
-                                            "\nName: " + hdd.getName() +
-                                            "\nInterface: SATA\nRPM: " + hdd.getRpm() +
-                                            "\nCapacities: ");
-                                    for (int cap : hdd.getCapacities()) {
-                                        sysOut(" - " + cap + "GB ($" + calculatePriceDrive(hdd, cap) + ")");
-                                    }
-                                } catch (Exception e) {
-                                    sysOut("Please use a valid integer!");
+                            } catch (Exception e) {
+                                if (e instanceof IndexOutOfBoundsException) {
+                                    sysOut("----------\nBrands:\nintel\namd\n----------");
                                 }
                             }
-                        } catch (Exception e) {
-                            sysOut("Options: ssd, hdd");
-                        }
-                    } else if (command.get(1).equals("case")) {
-                        try {
-                            Case chosenCase = caseList.get(Integer.parseInt(command.get(2)));
-                        } catch (Exception e) {
-                            sysOut("Please use a valid integer!");
-                        }
-                    } else {
-                        sysOut("Second arg was invalid!");
+                            break;
+                        case "motherboard":
+                            try {
+                                Motherboard motherboard = motherboardList.get(Integer.parseInt(command.get(2)) - 1);
+                                sysOut("----------" +
+                                        "\nMotherboard details: " +
+                                        "\nName: " + motherboard.getName() +
+                                        "\nSocket: " + motherboard.getSocket() +
+                                        "\nSize: " + motherboard.getSize() +
+                                        "\nUSB Ports: " + motherboard.getUsb2Ports() + " USB-2 ports, " + motherboard.getUsb3Ports() + " USB-3 ports, " + motherboard.getUsbCPorts() + " USB-C ports" +
+                                        "\nOutputs: " + motherboard.getNumOutputs() +
+                                        "\nPCIe Slots: " + motherboard.getPcieSlots() +
+                                        "\nRAM Slots: " + motherboard.getRamSlots() + " (with " + motherboard.getMaxMemory() + " gb of maximum memory)" +
+                                        "\nNVME Slots: " + motherboard.getNvmeSlots() +
+                                        "\nSATA Ports: " + motherboard.getSataSlots() +
+                                        "\nIntegrated WiFi: " + motherboard.isIntWiFi() +
+                                        "\nIntegrated Bluetooth: " + motherboard.isIntBT() +
+                                        "\nPrice: $" + motherboard.getPrice() +
+                                        "\n----------");
+                            } catch (Exception e) {
+                                if (e instanceof IndexOutOfBoundsException) {
+                                    sysOut("Please use a number for the details of the item!");
+                                }
+                            }
+                            break;
+                        case "gpu":
+                            try {
+                                GPU gpu = gpuList.get(Integer.parseInt(command.get(2)) - 1);
+                                sysOut("----------" +
+                                        "\nGPU Details:" +
+                                        "\nName: " + gpu.getName() +
+                                        "\nRelease Date: " + gpu.getReleaseDate() +
+                                        "\nCore clock: " + gpu.getBaseClock() + " MHz (Boost Clock: " + gpu.getBoostClock() + " MHz)" +
+                                        "\nMemory: " + gpu.getMemorySize() + "GB " + gpu.getMemoryType() +
+                                        "\nCores: " + gpu.getCores() +
+                                        "\nPrice: $" + gpu.getPrice() +
+                                        "\n----------");
+                            } catch (Exception e) {
+                                if (e instanceof IndexOutOfBoundsException) {
+                                    sysOut("Please use a number for the details of the item!");
+                                }
+                            }
+                            break;
+                        case "drive":
+                            try {
+                                if (command.get(2).equals("ssd")) {
+                                    try {
+                                        SSD ssd = ssdList.get(Integer.parseInt(command.get(3)) - 1);
+                                        sysOut("---------\nSSD:" +
+                                                "\nName: " + ssd.getName() +
+                                                "\nInterface: " + ssd.getInterf() +
+                                                "\nRead Speeds: " + ssd.getReadSpeed() +
+                                                "\nWrite Speeds: " + ssd.getWriteSpeed() +
+                                                "\nCapacities: ");
+                                        for (int cap : ssd.getCapacities()) {
+                                            sysOut(" - " + cap + "GB ($" + calculatePriceDrive(ssd, cap) + ")");
+                                        }
+                                    } catch (Exception e) {
+                                        sysOut("Please use a valid integer!");
+                                    }
+                                } else if (command.get(2).equals("hdd")) {
+                                    try {
+                                        HDD hdd = hddList.get(Integer.parseInt(command.get(3)) - 1);
+                                        sysOut("----------\nHDD:" +
+                                                "\nName: " + hdd.getName() +
+                                                "\nInterface: SATA\nRPM: " + hdd.getRpm() +
+                                                "\nCapacities: ");
+                                        for (int cap : hdd.getCapacities()) {
+                                            sysOut(" - " + cap + "GB ($" + calculatePriceDrive(hdd, cap) + ")");
+                                        }
+                                    } catch (Exception e) {
+                                        sysOut("Please use a valid integer!");
+                                    }
+                                }
+                            } catch (Exception e) {
+                                sysOut("Options: ssd, hdd");
+                            }
+                            break;
+                        case "case":
+                            try {
+                                Case chosenCase = caseList.get(Integer.parseInt(command.get(2)) - 1);
+                                sysOut("----------\nCase Details: " +
+                                        "\nName: " + chosenCase.getName() +
+                                        "\nManufacturer: " + chosenCase.getManufacturer() +
+                                        "\nSide panel: " + chosenCase.getSidePanel() +
+                                        "\nType: " + chosenCase.getType() +
+                                        "\nUSB ports: (" + chosenCase.getUsb2Ports() + " USB-2 ports, " + chosenCase.getUsb3Ports() + " USB-3 ports, " + chosenCase.getUsbCPorts() + " USB-C ports)" +
+                                        "\nPrice: $" + chosenCase.getPrice());
+                            } catch (Exception e) {
+                                sysOut("Please use a valid integer!");
+                            }
+                            break;
+                        case "psu":
+                            try {
+                                PowerSupply psu = powerSupplyList.get(Integer.parseInt(command.get(2)) - 1);
+                                sysOut("----------\nPSU Details: " +
+                                        "\nName: " + psu.getName() +
+                                        "\nRating: " + psu.getRating() +
+                                        "\nType: " + psu.getType() +
+                                        "\nWattages: ");
+                                for (int wattage : psu.getWatts()) {
+                                    sysOut(" - " + wattage + "W");
+                                }
+                            } catch (Exception e) {
+                                sysOut("Please use a valid integer!");
+                            }
+                            break;
+                        default:
+                            sysOut("Second arg was invalid!");
+                            break;
                     }
                 } catch (Exception e) {
                     if (e instanceof IndexOutOfBoundsException) {
@@ -239,14 +283,32 @@ public class Main {
                     }
                 }
             } else if (command.get(0).equals("startbuild") || command.get(0).equals("]startbuild")) {
-                List<Object> obj = pcBuild();
+                Object builtPC = pcBuild();
+                if (builtPC instanceof Computer) {
+                    var.computerList.add((Computer) builtPC);
+                    break;
+                }
+            } else if (command.get(0).equals("list")) {
+                var.listPCs();
+            } else if (command.get(0).equals("sell")) {
+                try {
+                    sysOut("You are selling PC #" + (Integer.parseInt(command.get(1)) - 1) + ". You will get $" + Math.round(var.getComputerList().get(Integer.parseInt(command.get(1)) - 1).getPrice()*1.15) + ". Are you sure? (Y/N)");
+                    String userCommand = scan.nextLine();
+                    if (userCommand.equals("y") || userCommand.equals("yes")) {
+                        var.setBal(var.getBal() + Math.round(var.getComputerList().get(Integer.parseInt(command.get(1)) - 1).getPrice()*1.15));
+                        var.computerList.remove(var.getComputerList().get(Integer.parseInt(command.get(1)) - 1));
+                        sysOut("New balance: " + var.getBal());
+                    }
+                } catch (Exception e) {
+                    sysOut(e.toString());
+                }
             } else {
                 sysOut("First arg was invalid!");
             }
         }
     }
 
-    public List<Object> pcBuild() {
+    public Object pcBuild() {
         List<Object> emptyList = new ArrayList<>();
         List<Object> pcPartsList = new ArrayList<>();
         //region CPU
@@ -341,9 +403,9 @@ public class Main {
                 return emptyList;
             }
             try {
-                RAM[] rams = new RAM[ramConfig.get(Integer.parseInt(userCommand)).toCharArray()[0]];
-                for (int i = 1; i <= (ramConfig.get(Integer.parseInt(userCommand)).toCharArray()[0]); i++) {
-                    rams[i - 1] = new RAM(ramSpeedChoice.substring(0, 4), Integer.parseInt(ramSpeedChoice.substring(ramSpeedChoice.length() - (ramSpeedChoice.length() - 5))), Integer.parseInt(ramConfig.get(Integer.parseInt(userCommand)).substring(ramConfig.get(Integer.parseInt(userCommand)).length() - (ramConfig.get(Integer.parseInt(userCommand)).length() - 2))));
+                RAM[] rams = new RAM[Character.getNumericValue(ramConfig.get(Integer.parseInt(userCommand)).charAt(0))];
+                for (int i = 0; i < (rams.length); i++) {
+                    rams[i] = new RAM(ramSpeedChoice.substring(0, 4), Integer.parseInt(ramSpeedChoice.substring(ramSpeedChoice.length() - (ramSpeedChoice.length() - 5))), Integer.parseInt(ramConfig.get(Integer.parseInt(userCommand) - 1).substring(ramConfig.get(Integer.parseInt(userCommand) - 1).length() - (ramConfig.get(Integer.parseInt(userCommand) - 1).length() - 2))));
                 }
                 pcPartsList.add(rams);
             } catch (Exception e) {
@@ -510,28 +572,70 @@ public class Main {
             }
         }
         //endregion
-        //region PC Details
-        sysOut("**********\nPC Details: " +
-                "\nCase: " + ((Case) pcPartsList.get(5)).getName() +
-                "\nCPU: " + ((CPU) pcPartsList.get(0)).getName() +
-                "\nMotherboard: " + ((Motherboard) pcPartsList.get(1)).getName() +
-                "\nRAM: " + ((RAM[]) pcPartsList.get(2)).length + "x" + (((RAM[]) pcPartsList.get(2))[0]).getCapacity() + "GB " + (((RAM[]) pcPartsList.get(2))[0]).getType() + "-" + (((RAM[]) pcPartsList.get(2))[0]).getSpeed() +
-                "\nGPU(s): " + ((GPU[]) pcPartsList.get(3))[0].getName() + " (" + ((GPU[]) pcPartsList.get(3)).length + ")" +
-                "\nDrives:");
-        for (Drive drive : ((List<Drive>) pcPartsList.get(4))) {
-            if (drive instanceof SSD) {
-                if (((SSD) drive).getInterf().equals("NVMe")) {
-                    sysOut(" - " + drive.getName() + " [NVMe | SSD | " + drive.getChosenCapacity() + "GB] ($" + calculatePriceDrive(drive) + ")");
-                } else {
-                    sysOut(" - " + drive.getName() + " [SATA | SSD | " + drive.getChosenCapacity() + "GB] ($" + calculatePriceDrive(drive) + ")");
-                }
-            } else {
-                sysOut(" - " + drive.getName() + " [SATA | HDD | " + drive.getChosenCapacity() + "GB] ($" + calculatePriceDrive(drive) + ")");
+        //region PSU
+        int buildWatts = getWattage(pcPartsList);
+        PowerSupply chosenPSU = null;
+        List<PowerSupply> powerSupplies = new ArrayList<>();
+        for (PowerSupply psu : powerSupplyList) {
+            if (psu.hasAbovePower(buildWatts)) {
+                powerSupplies.add(psu);
             }
         }
-        sysOut("**********");
+        while (pcPartsList.size() != 7) {
+            sysOut("**********\nSelect your power supply: ");
+            for (PowerSupply psu : powerSupplies) {
+                sysOut(powerSupplies.indexOf(psu) + 1 + ". " + psu.getName() + " (" + psu.getType() + " | " + psu.getRating() + ")");
+            }
+            sysOut("**********");
+            String userCommand = scan.nextLine();
+            if (userCommand.equals("stop") || userCommand.equals("end")) {
+                return emptyList;
+            }
+            try {
+                chosenPSU = powerSupplies.get(Integer.parseInt(userCommand) - 1);
+            } catch (Exception e) {
+                sysOut(e.toString());
+            }
+            List<Integer> chosenWattsList = new ArrayList<>();
+            for (int watts : chosenPSU.getWatts()) {
+                if (buildWatts <= watts) {
+                    chosenWattsList.add(watts);
+                }
+            }
+            sysOut("**********\nChoose the amount of watts: ");
+            for (int watts : chosenWattsList) {
+                sysOut(chosenWattsList.indexOf(watts) + 1 + ". " + watts + " ($" + chosenPSU.getPrice(watts) + ")");
+            }
+            sysOut("**********");
+            userCommand = scan.nextLine();
+            if (userCommand.equals("stop") || userCommand.equals("end")) {
+                return emptyList;
+            }
+            try {
+                chosenPSU.setChosenWatts(chosenWattsList.get(Integer.parseInt(userCommand) - 1));
+                pcPartsList.add(chosenPSU);
+            } catch (Exception e) {
+                sysOut("Caught an error!");
+            }
+        }
         //endregion
-        return pcPartsList;
+        Computer builtComputer = new Computer(var.getDay(), (CPU) pcPartsList.get(0), (Motherboard) pcPartsList.get(1), (RAM[]) pcPartsList.get(2), (GPU[]) pcPartsList.get(3), (List<Drive>) pcPartsList.get(4), (Case) pcPartsList.get(5), (PowerSupply) pcPartsList.get(6));
+        builtComputer.sysOutput();
+        if (var.getBal() >= builtComputer.getPrice()) {
+            sysOut("Would you like to buy this PC? ($" + var.getBal() + " -> $" + (var.getBal() - builtComputer.getPrice()) + ")");
+            String userCommand = scan.nextLine();
+            if (userCommand.equals("y") || userCommand.equals("yes")) {
+                var.setBal(var.getBal() - builtComputer.getPrice());
+                sysOut("Computer purchased! View it in your 'list' menu!");
+                return builtComputer;
+            } else if (userCommand.equals("n") || userCommand.equals("no")) {
+                sysOut("Order cancelled. Returned to home.");
+                return emptyList;
+            }
+        } else {
+            sysOut("You cannot afford this PC!\nReturned to home.");
+        }
+        return emptyList;
     }
     //region Mini-methods
     public void setIntelCPUList(List<CPU> intelCPUList) {
@@ -603,12 +707,12 @@ public class Main {
     public double calculatePriceDrive(Drive drive) {
         if (drive instanceof SSD) {
             if (((SSD) drive).getInterf().equals("NVMe")) {
-                return ((((Math.pow(((SSD) drive).getReadSpeed(), 2)) * drive.getChosenCapacity()) / (15000 * ((SSD) drive).getWriteSpeed())) * (Math.pow(0.99999, drive.getChosenCapacity())));
+                return Math.round((((Math.pow(((SSD) drive).getReadSpeed(), 2)) * drive.getChosenCapacity()) / (15000 * ((SSD) drive).getWriteSpeed())) * (Math.pow(0.99999, drive.getChosenCapacity())));
             } else {
-                return ((((Math.pow(((SSD) drive).getReadSpeed(), 2)) * drive.getChosenCapacity()) / (5000 * ((SSD) drive).getWriteSpeed())) * (Math.pow(0.99999, drive.getChosenCapacity())));
+                return Math.round((((Math.pow(((SSD) drive).getReadSpeed(), 2)) * drive.getChosenCapacity()) / (5000 * ((SSD) drive).getWriteSpeed())) * (Math.pow(0.99999, drive.getChosenCapacity())));
             }
         } else {
-            return ((7*((HDD) drive).getRpm()) / drive.getChosenCapacity());
+            return Math.round((((HDD) drive).getChosenCapacity()*((HDD) drive).getRpm()) / 400000);
         }
     }
     public double calculatePriceDrive(Drive drive, int cap) {
@@ -619,9 +723,15 @@ public class Main {
                 return ((((Math.pow(((SSD) drive).getReadSpeed(), 2)) * cap) / (5000 * ((SSD) drive).getWriteSpeed())) * (Math.pow(0.99999, cap)));
             }
         } else {
-            return ((7*((HDD) drive).getRpm()) / cap);
+            return Math.round((cap*((HDD) drive).getRpm()) / 400000);
         }
     }
     public void setCaseList(List<Case> caseList) {this.caseList = caseList;}
+    public void setPowerSupplyList(List<PowerSupply> powerSupplyList) {
+        this.powerSupplyList = powerSupplyList;
+    }
+    public int getWattage(List<Object> pcParts) {
+        return ((CPU) pcParts.get(0)).getTDP() + ((GPU[]) pcParts.get(3))[0].getTdp() + 75 + ((RAM[]) pcParts.get(2)).length*((RAM[]) pcParts.get(2))[0].getCapacity() + ((List<Drive>) pcParts.get(4)).size()*15;
+    }
     //endregion
 }

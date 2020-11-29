@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Variables {
     public int day = 0;
-    public int bal = 500;
+    public double bal = 1000;
     public List<CPU> CPUList = new ArrayList<>();
     public List<CPU> intelCPUList = new ArrayList<>();
     public List<CPU> amdCPUList = new ArrayList<>();
@@ -18,6 +18,8 @@ public class Variables {
     List<HDD> hddList = new ArrayList<>();
     List<Drive> driveList = new ArrayList<>();
     List<Case> caseList = new ArrayList<>();
+    List<PowerSupply> powerSupplyList = new ArrayList<>();
+    public List<Computer> computerList = new ArrayList<>();
 
     public void initLists() {
         //INTEL CPUS
@@ -56,7 +58,8 @@ public class Variables {
 
 
         //GPUs
-        gpuList.add(new GPU("NVIDIA Geforce RTX 3080", "Q3' 2020", "GDDR6X", 10, 8704, 1440, 1710, 600, 320));
+        gpuList.add(new GPU("NVIDIA GeForce RTX 3080", "Q3' 2020", "GDDR6X", 10, 8704, 1440, 1710, 600, 320));
+        gpuList.add(new GPU("NVIDIA GeForce GT 1030", "Q2' 2017", "GDDR5", 2, 384, 1290, 1544, 90, 30));
 
 
         //SSDs
@@ -80,6 +83,13 @@ public class Variables {
         //Cases
         caseList.add(new Case("H510", "NZXT", "Tempered Glass", "ATX", 0, 1, 1, 70));
         caseList.add(new Case("275R Airflow", "Corsair", "Tempered Glass", "ATX", 0, 2, 0, 80));
+
+        //Power Supplies
+        powerSupplyList.add(new PowerSupply("EVGA BA", "Non-Modular", "80+ BRONZE", new int[]{450, 500, 550, 600, 650, 700, 750, 850}));
+        powerSupplyList.add(new PowerSupply("Seasonic S12III", "Non-Modular", "80+ BRONZE", new int[]{500, 550, 650}));
+        powerSupplyList.add(new PowerSupply("Corsair RMx Series", "Full Modular", "80+ GOLD", new int[]{550, 650, 750, 850, 1000}));
+        powerSupplyList.add(new PowerSupply("Gigabyte P450B", "Non-Modular", "80+ BRONZE", new int[]{450, 550, 650}));
+        powerSupplyList.add(new PowerSupply("Gigabyte P750GM", "Full Modular", "80+ GOLD", new int[]{750, 850}));
     }
     public List<CPU> getAmdCPUList() {
         return amdCPUList;
@@ -87,10 +97,10 @@ public class Variables {
     public List<CPU> getIntelCPUList() {
         return intelCPUList;
     }
-    public void setBal(int value) {
+    public void setBal(double value) {
         bal = value;
     }
-    public int getBal() {
+    public double getBal() {
         return bal;
     }
     public void setDay(int value) {
@@ -119,5 +129,21 @@ public class Variables {
     }
     public List<Drive> getDriveList() {
         return driveList;
+    }
+    public List<PowerSupply> getPowerSupplyList() {
+        return powerSupplyList;
+    }
+    public void listPCs() {
+        System.out.println("**********\nYour PCs:");
+        for (Computer computer : computerList) {
+            System.out.println(computerList.indexOf(computer) + 1 + ". Day " + computer.dayMade + " | " + computer.getCpu().getName() + " | " + computer.getMobo().getName() + " | " + computer.getGpus()[0].getName() + " (" + computer.getGpus().length + ") | " + computer.getRams().length + "x" + computer.getRams()[0].getCapacity() + "GB " + computer.getRams()[0].getType() + "-" + computer.getRams()[0].getSpeed());
+        }
+        System.out.println("**********");
+    }
+    public List<Computer> getComputerList() {
+        return computerList;
+    }
+    public void nextDay() {
+        day++;
     }
 }
