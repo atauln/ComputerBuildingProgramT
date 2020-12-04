@@ -72,4 +72,14 @@ public class Motherboard {
     public int getPrice() {
         return price;
     }
+    public int getRating() {
+        int motherboardRating = (int) (Math.pow(2*this.getUsb2Ports(), 2) + Math.pow(3*this.getUsb3Ports(), 3) + Math.pow(4*this.getUsbCPorts(), 4) + Math.pow(3*this.getNumOutputs(), 4));
+        if (this.isIntBT()) {
+            motherboardRating *= 2;
+        }
+        if (this.isIntWiFi()) {
+            motherboardRating *= 2;
+        }
+        return motherboardRating;
+    }
 }

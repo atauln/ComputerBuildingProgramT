@@ -147,4 +147,24 @@ public class CPU {
     public String getArchitecture() {
         return architecture;
     }
+    public int getOverclockable() {
+        if (isOverclockable()) {
+            return 2;
+        }
+        return 1;
+    }
+    public int getRating() {
+        int cpuRating = (int) (this.getGhz()*Math.pow(this.getCoreCount(), 2)*Math.pow(this.getOverclockable(), 2));
+        try {
+            if (this.getHyperThreading() != this.getCoreCount()) {
+                cpuRating *= Math.pow(this.getHyperThreading() / this.getCoreCount(), 2);
+            }
+        } catch (Exception e) {}
+        try {
+            if (this.getGhz() != this.getTurboBoostTo()) {
+                cpuRating *= Math.pow(this.getTurboBoostTo() / this.getGhz(), 3);
+            }
+        } catch (Exception e) {}
+        return cpuRating;
+    }
 }

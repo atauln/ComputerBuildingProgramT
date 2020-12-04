@@ -36,4 +36,7 @@ public class Case {
     public int getUsbCPorts() {
         return usbCPorts;
     }
+    public int getRating() {
+        return (int) (1000*Math.pow(usb2Ports + 1, 2)*Math.pow(usb3Ports + 1, 3)*Math.pow(usbCPorts + 1, 4));
+    }
 }

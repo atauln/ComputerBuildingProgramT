@@ -1,7 +1,6 @@
 package com.atom.cbp.terminal.libraries;
 import com.atom.cbp.terminal.Main;
-import com.atom.cbp.terminal.libraries.Drives.Drive;
-import com.atom.cbp.terminal.libraries.Drives.SSD;
+import com.atom.cbp.terminal.libraries.Drives.*;
 
 import java.util.List;
 public class Computer {
@@ -66,6 +65,9 @@ public class Computer {
     public void setChosenCase(Case chosenCase) {
         this.chosenCase = chosenCase;
     }
+    public void setDay(int day) {
+        this.dayMade = day;
+    }
     public int getWatts() {
         return cpu.getTDP() + gpus[0].getTdp() + 75 + rams.length*rams[0].getCapacity() + driveList.size()*15;
     }
@@ -99,5 +101,33 @@ public class Computer {
             drivePrices += m.calculatePriceDrive(drive);
         }
         return Math.round(cpu.getPrice() + mobo.getPrice() + gpus.length*gpus[0].getPrice() + rams.length*rams[0].getPrice() + drivePrices + chosenCase.getPrice() + powerSupply.getPrice());
+    }
+    public double getRatings() {
+        //RAM range (up to 90,112)
+        int ramRating = (int) Math.pow(Integer.parseInt(rams[0].getType().substring(rams[0].getType().length() - 1)), 2) * ((rams.length * rams[0].getCapacity() * rams[0].getSpeed()) / 100);
+
+        //CPU range (up to 109,057)
+        int cpuRating = cpu.getRating();
+
+        //Motherboard range (up to 8,000)
+        int motherboardRating = mobo.getRating();
+
+        //GPU range (up to 736,584)
+        int gpuRating = gpus[0].getRating() * gpus.length;
+
+        //Drive range (up to 160,545 [EACH])
+        int driveRating = 0;
+        for (Drive drive: driveList) {
+            if (drive instanceof SSD) {
+                driveRating = ((SSD) drive).getRating();
+            } else if (drive instanceof HDD) {
+                driveRating = ((HDD) drive).getRating();
+            }
+        }
+
+        //Case range (up to 128,000)
+        int caseRating = chosenCase.getRating();
+        
+        return ramRating + cpuRating + motherboardRating + gpuRating + driveRating + caseRating;
     }
 }

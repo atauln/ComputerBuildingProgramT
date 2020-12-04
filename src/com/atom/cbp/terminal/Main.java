@@ -4,7 +4,6 @@ import com.atom.cbp.terminal.libraries.*;
 import com.atom.cbp.terminal.libraries.Drives.*;
 
 import java.util.*;
-
 public class Main {
 
     //Local variable declaration
@@ -143,7 +142,7 @@ public class Main {
                                 if (command.get(2).equals("intel")) {
                                     try {
                                         currentCPU = intelCPUList.get(Integer.parseInt(command.get(3)) - 1);
-                                        getCPUdetails(currentCPU);
+                                        getCPUDetails(currentCPU);
                                     } catch (Exception e) {
                                         if (e instanceof IndexOutOfBoundsException) {
                                             sysOut("Please use a number for the details of an item!");
@@ -152,7 +151,7 @@ public class Main {
                                 } else if (command.get(2).equals("amd")) {
                                     try {
                                         currentCPU = AMDCPUList.get(Integer.parseInt(command.get(3)) - 1);
-                                        getCPUdetails(currentCPU);
+                                        getCPUDetails(currentCPU);
                                     } catch (Exception e) {
                                         if (e instanceof IndexOutOfBoundsException) {
                                             sysOut("Please use a number for the details of an item!");
@@ -285,6 +284,7 @@ public class Main {
             } else if (command.get(0).equals("startbuild") || command.get(0).equals("]startbuild")) {
                 Object builtPC = pcBuild();
                 if (builtPC instanceof Computer) {
+                    ((Computer) builtPC).setDay(day);
                     var.computerList.add((Computer) builtPC);
                     break;
                 }
@@ -670,7 +670,7 @@ public class Main {
         int su = Integer.parseInt(sub);
         return Math.round(0.0025 * Math.pow(su, 1.01));
     }
-    public void getCPUdetails(CPU currentCPU) {
+    public void getCPUDetails(CPU currentCPU) {
         sysOut("----------");
         sysOut("CPU Details");
         sysOut("Name: " + currentCPU.getName());

@@ -24,4 +24,7 @@ public class SSD extends Drive {
     public String getInterf() {
         return interf;
     }
+    public int getRating() {
+        return (int) ((Math.pow(readSpeed, 2) * chosenCapacity) / 100 * writeSpeed);
+    }
 }

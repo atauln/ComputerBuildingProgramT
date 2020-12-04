@@ -136,7 +136,7 @@ public class Variables {
     public void listPCs() {
         System.out.println("**********\nYour PCs:");
         for (Computer computer : computerList) {
-            System.out.println(computerList.indexOf(computer) + 1 + ". Day " + computer.dayMade + " | " + computer.getCpu().getName() + " | " + computer.getMobo().getName() + " | " + computer.getGpus()[0].getName() + " (" + computer.getGpus().length + ") | " + computer.getRams().length + "x" + computer.getRams()[0].getCapacity() + "GB " + computer.getRams()[0].getType() + "-" + computer.getRams()[0].getSpeed());
+            System.out.println(computerList.indexOf(computer) + 1 + ". Day " + computer.dayMade + " | Rating: " + computer.getWatts() + " | " + computer.getCpu().getName() + " | " + computer.getMobo().getName() + " | " + computer.getGpus()[0].getName() + " (" + computer.getGpus().length + ") | " + computer.getRams().length + "x" + computer.getRams()[0].getCapacity() + "GB " + computer.getRams()[0].getType() + "-" + computer.getRams()[0].getSpeed());
         }
         System.out.println("**********");
     }

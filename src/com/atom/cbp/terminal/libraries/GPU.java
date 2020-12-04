@@ -47,4 +47,17 @@ public class GPU {
     public int getTdp() {
         return tdp;
     }
+    public int getRating() {
+        int rating = (int) (this.getBaseClock()*Math.pow(this.getBoostClock() / this.getBaseClock(), 3)*Math.sqrt(Math.sqrt(this.getCores())));
+        if (this.getMemoryType().equals("GDDR5")) {
+            rating *= Math.pow(this.getMemorySize(), 1);
+        } else if (this.getMemoryType().equals("GDDR5X")) {
+            rating *= Math.pow(this.getMemorySize(), 1.5);
+        } else if (this.getMemoryType().equals("GDDR6")) {
+            rating *= Math.pow(this.getMemorySize(), 2);
+        } else if (this.getMemoryType().equals("GDDR6X")) {
+            rating *= Math.pow(this.getMemorySize(), 2.5);
+        }
+        return rating;
+    }
 }

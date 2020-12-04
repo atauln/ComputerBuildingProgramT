@@ -13,4 +13,7 @@ public class HDD extends Drive {
     public int getRpm() {
         return rpm;
     }
+    public int getRating() {
+        return (int) (( Math.pow( rpm, 2 ) * chosenCapacity ) / 60_000_000);
+    }
 }
